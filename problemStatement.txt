@@ -1,0 +1,86 @@
+Background Modern urban transportation networks face persistent challenges of traffic congestion, inefficient route planning, and high operational costs. Classical optimization techniques struggle with large-scale Vehicle Routing Problems (VRP) because of their NP-hard nature. While quantum computers offer theoretical advantages for combinatorial optimization,current hardware limitations prevent their direct large-scale use. Quantum-inspired metaheuristic algorithms (e.g., Quantum Particle Swarm Optimization - QPSO) embed quantum-mechanical concepts into classical computation, delivering stronger global search, faster convergence, and a better balance between exploration and exploitation.
+
+Problem Description Develop a quantum-inspired metaheuristic optimization framework that dynamically generates near-optimal vehicle routes under real-time or simulated traffic conditions.The transportation network will be modelled as a weighted graph. The framework will focus on algorithms such as Quantum Particle Swarm Optimization (QPSO) and will be benchmarked against conventional metaheuristics and exact methods.
+
+Objectives 1. Design a quantum-inspired metaheuristic framework capable of solving large-scale VRP and shortest-path problems.
+
+2. Minimize total travel time, distance, and traffic congestion.
+
+3. Reduce computational complexity while improving convergence speed and solution quality compared with classical algorithms.
+
+4. Demonstrate scalability for smart-city logistics and intelligent transportation systems.
+
+Expected Solution A complete software platform that implements a Quantum-Inspired Metaheuristic Optimization Algorithm for intelligent traffic routing. The platform must include graph-based network modelling, mathematical formulation of the optimization problem,constraint handling, convergence analysis, and systematic performance benchmarking.
+
+Expected Deliverables (Phase 1)
+
++------+-----------------------------------------------+--------------------------------------------------+--------+
+| #    | Deliverable                                   | Where It Is                                      | Status |
++------+-----------------------------------------------+--------------------------------------------------+--------+
+| D1   | Graph-Based Network Model                     | backend/app/qray/graph.py                      | Done   |
+|      | City road network as weighted NetworkX graph. | Class: RoadNetwork                               |        |
+|      | Pre-calculated travel-time matrix for O(1)    | Method: update_travel_time_matrix()              |        |
+|      | lookups during search.                        |                                                  |        |
++------+-----------------------------------------------+--------------------------------------------------+--------+
+| D2   | Mathematical Formulation of Optimization      | backend/app/qray/qpso.py                       | Done   |
+|      | QPSO quantum position update equations        | Class: QPSOEngine                                |        |
+|      | (mbest, local attractor, quantum step).       | Method: step_vectorized_qpso()                   |        |
+|      | Random-key encoding of permutation space.     | backend/app/qray/graph.py                      |        |
+|      |                                               | Method: decode_particle_to_routes()              |        |
++------+-----------------------------------------------+--------------------------------------------------+--------+
+| D3   | VRP-Aware Heuristic Seeding                   | backend/app/qray/graph.py                      | Done   |
+|      | Particle 0 seeded from exact Dijkstra-NN      | Method: get_vrp_seeded_keys()                    |        |
+|      | routes so QPSO starts at or below the         | backend/app/qray/qpso.py                       |        |
+|      | classical baseline from iteration 0.          | Method: initialize_swarm()                       |        |
++------+-----------------------------------------------+--------------------------------------------------+--------+
+| D4   | Constraint Handling                           | backend/app/qray/feasibility.py                | Done   |
+|      | Capacity limits, depot start/end rules,       | Class: FeasibilityEvaluator                      |        |
+|      | single-visit enforcement. Quadratic penalty   | Method: evaluate_routes()                        |        |
+|      | scoring for infeasible candidates.            |                                                  |        |
++------+-----------------------------------------------+--------------------------------------------------+--------+
+| D5   | Escape and Refinement Mechanisms              | backend/app/qray/refinement.py                 | Done   |
+|      | Chaos Logistic Map mutation (worst 50% of     | Function: apply_chaos_mutation()                 |        |
+|      | particles only). Guarded 2-opt polishing      | Function: polish_gbest_routes_2opt()             |        |
+|      | (global best only, every 15 iterations).      |                                                  |        |
++------+-----------------------------------------------+--------------------------------------------------+--------+
+| D6   | Dynamic Real-Time Traffic Rerouting           | backend/app/qray/dynamic.py                    | Done   |
+|      | Live traffic congestion updates to graph.     | Class: DynamicTrafficManager                     |        |
+|      | Dual-seed warm restart: particle 0 = fresh    | Method: handle_traffic_update()                  |        |
+|      | NN seed on new traffic, particle 1 = old      |                                                  |        |
+|      | gbest memory. No cold restart needed.         |                                                  |        |
++------+-----------------------------------------------+--------------------------------------------------+--------+
+| D7   | Convergence Analysis                          | backend/app/empirical_runner.py                  | Done   |
+|      | Per-iteration cost history tracked for every  | Class: EmpiricalProfiler                         |        |
+|      | experiment. Microsecond clock-time breakdown  | backend/empirical_benchmark_summary.json         |        |
+|      | per pipeline layer (feasibility, QPSO math,   |                                                  |        |
+|      | chaos, 2-opt).                                |                                                  |        |
++------+-----------------------------------------------+--------------------------------------------------+--------+
+| D8   | Systematic Performance Benchmarking           | backend/app/empirical_runner.py                  | Done   |
+|      | 5 dataset scales (15 to 300 stops).           | Function: execute_full_empirical_suite()         |        |
+|      | 3 QPSO variations tested.                     | Function: run_parameter_grid_sweep()             |        |
+|      | 4 classical baselines: Dijkstra/NN,           | backend/app/benchmarks/baselines.py              |        |
+|      | Clarke-Wright, GA, ACO.                       |                                                  |        |
+|      | Parameter grid sweeps (alpha, swarm size,     |                                                  |        |
+|      | 2-opt frequency) - all data-proven.           |                                                  |        |
++------+-----------------------------------------------+--------------------------------------------------+--------+
+| D9   | REST API Platform                             | backend/app/main.py                              | Done   |
+|      | FastAPI server exposing benchmark results,    | Endpoints: /api/benchmark,                       |        |
+|      | parameter sweeps, and live experiment         | /api/parameter-sweep,                            |        |
+|      | execution via HTTP.                           | /api/run-experiment                              |        |
++------+-----------------------------------------------+--------------------------------------------------+--------+
+| D10  | Empirical Testing Frontend                    | frontend/src/App.jsx                             | Done   |
+|      | React + Recharts interactive dashboard.       | frontend/src/fallbackBenchmarkData.json          |        |
+|      | Algorithm cost comparison charts, clock-time  |                                                  |        |
+|      | profiler breakdown, parameter sweep line      |                                                  |        |
+|      | charts, live custom experiment runner.        |                                                  |        |
++------+-----------------------------------------------+--------------------------------------------------+--------+
+| D11  | Pipeline Documentation                        | pipeline_overview.md                             | Done   |
+|      | Plain-English What / Why / Where for each     |                                                  |        |
+|      | layer. Includes seeding rationale, chaos      |                                                  |        |
+|      | protection, and warm restart strategy.        |                                                  |        |
++------+-----------------------------------------------+--------------------------------------------------+--------+
+| D12  | Empirical Results Report                      | empirical_results.md                             | Done   |
+|      | Full benchmark tables, bottleneck analysis,   | backend/empirical_benchmark_summary.json         |        |
+|      | data-proven optimal parameter table,          |                                                  |        |
+|      | QPSO vs Dijkstra comparison at all scales.    |                                                  |        |
++------+-----------------------------------------------+--------------------------------------------------+--------+

@@ -1,0 +1,40 @@
+{
+  "test_scenario": "Dynamic 35-stop CVRP under 2.5x-3.5x Traffic Spike on 25% edges",
+  "results": {
+    "Dijkstra (Cold)": {
+      "cost": 1092.33,
+      "latency_ms": 0.2,
+      "restart_type": "Cold Restart",
+      "iterations": 1
+    },
+    "GA (Cold)": {
+      "cost": 992.12,
+      "latency_ms": 1746.99,
+      "restart_type": "Cold Restart",
+      "iterations": 200
+    },
+    "ACO (Cold)": {
+      "cost": 818.0,
+      "latency_ms": 3385.9,
+      "restart_type": "Cold Restart",
+      "iterations": 100
+    },
+    "QPSO (Cold)": {
+      "cost": 924.11,
+      "latency_ms": 190.86,
+      "restart_type": "Cold Restart",
+      "iterations": 120
+    },
+    "QRay Warm-Restart": {
+      "cost": 1080.46,
+      "latency_ms": 58.45,
+      "restart_type": "Warm Restart",
+      "iterations": 35
+    }
+  },
+  "speedup_summary": {
+    "warm_vs_cold_qpso": 3.27,
+    "warm_vs_aco": 57.93,
+    "warm_vs_ga": 29.89
+  }
+}

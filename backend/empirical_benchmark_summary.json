@@ -1,0 +1,2146 @@
+{
+  "timestamp": "2026-09-13 14:34:36",
+  "seed": 42,
+  "benchmark_dataset_results": {
+    "medium": {
+      "qalns": {
+        "algorithm_name": "Adaptive Quantum-Guided ALNS+ (Primary)",
+        "category": "Quantum-Inspired",
+        "best_cost": 927.13,
+        "pure_travel_time": 927.13,
+        "penalties": 0.0,
+        "elapsed_sec": 0.4003,
+        "latency_ms": 400.34,
+        "time_to_best_ms": 329.6,
+        "iters_per_sec": 2288.1,
+        "is_feasible": true,
+        "iterations": 916,
+        "component_metrics": {
+          "operator_usage": {
+            "random_removal": 162,
+            "worst_removal": 200,
+            "related_removal": 177,
+            "quantum_variance_removal": 200,
+            "or_opt_relocation": 177
+          },
+          "operator_improvements": {
+            "random_removal": 22,
+            "worst_removal": 43,
+            "related_removal": 27,
+            "quantum_variance_removal": 37,
+            "or_opt_relocation": 27
+          },
+          "operator_weights": {
+            "random_removal": 0.1968,
+            "worst_removal": 0.1876,
+            "related_removal": 0.1937,
+            "quantum_variance_removal": 0.1968,
+            "or_opt_relocation": 0.1876
+          },
+          "accepted_improvements": 156,
+          "accepted_worsening": 653,
+          "rejected_moves": 107,
+          "polish_passes": 36,
+          "stagnation_restarts": 9,
+          "timing_breakdown_ms": {
+            "destroy_sec": 87.32,
+            "repair_sec": 201.3,
+            "evaluate_sec": 80.67,
+            "polish_sec": 11.87,
+            "rotation_gate_sec": 6.48
+          }
+        },
+        "metadata": {
+          "destroy_fraction": 0.12,
+          "gamma_factor": 0.04,
+          "k_remove": 9,
+          "is_warm_start": false
+        },
+        "routes": [
+          [
+            0,
+            35,
+            0
+          ],
+          [
+            0,
+            58,
+            71,
+            51,
+            4,
+            37,
+            62,
+            25,
+            3,
+            36,
+            0
+          ],
+          [
+            0,
+            14,
+            17,
+            23,
+            60,
+            45,
+            16,
+            13,
+            64,
+            55,
+            0
+          ],
+          [
+            0,
+            38,
+            15,
+            20,
+            29,
+            61,
+            5,
+            19,
+            69,
+            66,
+            72,
+            22,
+            68,
+            0
+          ],
+          [
+            0,
+            43,
+            33,
+            50,
+            63,
+            26,
+            9,
+            41,
+            57,
+            0
+          ],
+          [
+            0,
+            47,
+            46,
+            52,
+            67,
+            6,
+            49,
+            39,
+            54,
+            31,
+            0
+          ],
+          [
+            0,
+            21,
+            2,
+            44,
+            70,
+            11,
+            34,
+            65,
+            74,
+            32,
+            0
+          ],
+          [
+            0,
+            30,
+            42,
+            48,
+            28,
+            73,
+            7,
+            18,
+            8,
+            0
+          ],
+          [
+            0,
+            56,
+            27,
+            24,
+            12,
+            40,
+            53,
+            10,
+            1,
+            75,
+            59,
+            0
+          ],
+          [
+            0,
+            0
+          ]
+        ],
+        "gap_pct": -36.07
+      },
+      "qpso": {
+        "algorithm_name": "Quantum-behaved Particle Swarm Optimization (QPSO)",
+        "category": "Quantum-Inspired",
+        "best_cost": 1261.12,
+        "pure_travel_time": 1261.12,
+        "penalties": 0.0,
+        "elapsed_sec": 0.4025,
+        "latency_ms": 402.47,
+        "time_to_best_ms": 0.0,
+        "iters_per_sec": 0.0,
+        "is_feasible": true,
+        "iterations": 111,
+        "component_metrics": {
+          "qpso_math_ms": 21.99,
+          "evaluation_ms": 375.83,
+          "mbest_dim": 75
+        },
+        "metadata": {
+          "swarm_size": 30,
+          "alpha": 0.7
+        },
+        "routes": [
+          [
+            0,
+            35,
+            68,
+            21,
+            55,
+            47,
+            8,
+            30,
+            42,
+            48,
+            72,
+            0
+          ],
+          [
+            0,
+            58,
+            54,
+            31,
+            71,
+            51,
+            56,
+            27,
+            4,
+            37,
+            62,
+            0
+          ],
+          [
+            0,
+            14,
+            64,
+            17,
+            23,
+            60,
+            13,
+            45,
+            16,
+            28,
+            0
+          ],
+          [
+            0,
+            38,
+            15,
+            61,
+            29,
+            20,
+            5,
+            19,
+            69,
+            66,
+            22,
+            34,
+            0
+          ],
+          [
+            0,
+            46,
+            52,
+            57,
+            43,
+            33,
+            50,
+            63,
+            41,
+            3,
+            0
+          ],
+          [
+            0,
+            39,
+            36,
+            25,
+            49,
+            6,
+            67,
+            9,
+            26,
+            24,
+            0
+          ],
+          [
+            0,
+            32,
+            74,
+            65,
+            11,
+            70,
+            44,
+            2,
+            1,
+            59,
+            0
+          ],
+          [
+            0,
+            73,
+            7,
+            18,
+            75,
+            10,
+            53,
+            40,
+            12,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ]
+        ],
+        "gap_pct": -13.04
+      },
+      "qpso_chaos": {
+        "algorithm_name": "QPSO + Chaos/Mutation",
+        "category": "Quantum-Inspired",
+        "best_cost": 1269.19,
+        "pure_travel_time": 1269.19,
+        "penalties": 0.0,
+        "elapsed_sec": 0.4006,
+        "latency_ms": 400.61,
+        "time_to_best_ms": 0.0,
+        "iters_per_sec": 0.0,
+        "is_feasible": true,
+        "iterations": 77,
+        "component_metrics": {
+          "chaos_triggers": 7,
+          "chaos_time_ms": 5.06,
+          "stagnant_threshold": 10
+        },
+        "metadata": {
+          "swarm_size": 30,
+          "alpha": 0.7
+        },
+        "routes": [
+          [
+            0,
+            35,
+            68,
+            21,
+            55,
+            47,
+            8,
+            30,
+            42,
+            48,
+            72,
+            0
+          ],
+          [
+            0,
+            58,
+            54,
+            31,
+            71,
+            51,
+            56,
+            27,
+            4,
+            37,
+            62,
+            0
+          ],
+          [
+            0,
+            14,
+            64,
+            17,
+            23,
+            60,
+            13,
+            45,
+            16,
+            28,
+            0
+          ],
+          [
+            0,
+            38,
+            15,
+            61,
+            29,
+            20,
+            5,
+            19,
+            66,
+            69,
+            22,
+            34,
+            0
+          ],
+          [
+            0,
+            46,
+            52,
+            57,
+            43,
+            33,
+            50,
+            63,
+            41,
+            3,
+            0
+          ],
+          [
+            0,
+            39,
+            36,
+            25,
+            49,
+            6,
+            67,
+            9,
+            26,
+            24,
+            0
+          ],
+          [
+            0,
+            32,
+            74,
+            65,
+            11,
+            70,
+            44,
+            2,
+            59,
+            1,
+            0
+          ],
+          [
+            0,
+            73,
+            7,
+            18,
+            75,
+            10,
+            53,
+            40,
+            12,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ]
+        ],
+        "gap_pct": -12.48
+      },
+      "qga": {
+        "algorithm_name": "Quantum-Inspired Genetic Algorithm (QGA)",
+        "category": "Quantum-Inspired",
+        "best_cost": 1264.49,
+        "pure_travel_time": 1264.49,
+        "penalties": 0.0,
+        "elapsed_sec": 0.4033,
+        "latency_ms": 403.32,
+        "time_to_best_ms": 0.0,
+        "iters_per_sec": 0.0,
+        "is_feasible": true,
+        "iterations": 75,
+        "component_metrics": {
+          "rotations_performed": 2250,
+          "mutations_performed": 102,
+          "delta_theta": 0.15707963267948966
+        },
+        "metadata": {
+          "pop_size": 30,
+          "mutation_rate": 0.05
+        },
+        "routes": [
+          [
+            0,
+            35,
+            68,
+            21,
+            55,
+            47,
+            8,
+            30,
+            42,
+            48,
+            72,
+            0
+          ],
+          [
+            0,
+            58,
+            54,
+            31,
+            71,
+            51,
+            56,
+            27,
+            4,
+            37,
+            62,
+            0
+          ],
+          [
+            0,
+            14,
+            64,
+            17,
+            23,
+            60,
+            13,
+            45,
+            16,
+            28,
+            0
+          ],
+          [
+            0,
+            38,
+            15,
+            61,
+            29,
+            20,
+            5,
+            19,
+            69,
+            66,
+            22,
+            34,
+            0
+          ],
+          [
+            0,
+            46,
+            52,
+            57,
+            43,
+            33,
+            50,
+            63,
+            41,
+            3,
+            0
+          ],
+          [
+            0,
+            39,
+            36,
+            25,
+            49,
+            6,
+            67,
+            9,
+            26,
+            24,
+            0
+          ],
+          [
+            0,
+            32,
+            74,
+            65,
+            11,
+            70,
+            44,
+            2,
+            59,
+            1,
+            0
+          ],
+          [
+            0,
+            73,
+            7,
+            18,
+            75,
+            10,
+            53,
+            40,
+            12,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ]
+        ],
+        "gap_pct": -12.81
+      },
+      "qaco": {
+        "algorithm_name": "Quantum-Inspired Ant Colony Optimization (QACO)",
+        "category": "Quantum-Inspired",
+        "best_cost": 1488.6,
+        "pure_travel_time": 1488.6,
+        "penalties": 0.0,
+        "elapsed_sec": 0.4542,
+        "latency_ms": 454.19,
+        "time_to_best_ms": 0.0,
+        "iters_per_sec": 0.0,
+        "is_feasible": true,
+        "iterations": 6,
+        "component_metrics": {
+          "ants_constructed": 90,
+          "rotations_performed": 510,
+          "mean_qubit_amplitude": 0.3669
+        },
+        "metadata": {
+          "num_ants": 15,
+          "rotation_step": 0.08
+        },
+        "routes": [
+          [
+            0,
+            21,
+            68,
+            74,
+            11,
+            65,
+            34,
+            22,
+            51,
+            4,
+            27,
+            24,
+            0
+          ],
+          [
+            0,
+            31,
+            54,
+            15,
+            5,
+            19,
+            20,
+            29,
+            61,
+            69,
+            38,
+            14,
+            17,
+            0
+          ],
+          [
+            0,
+            35,
+            55,
+            8,
+            48,
+            13,
+            60,
+            23,
+            64,
+            47,
+            0
+          ],
+          [
+            0,
+            58,
+            42,
+            33,
+            9,
+            67,
+            41,
+            63,
+            50,
+            57,
+            0
+          ],
+          [
+            0,
+            43,
+            49,
+            6,
+            3,
+            36,
+            25,
+            62,
+            37,
+            0
+          ],
+          [
+            0,
+            73,
+            7,
+            18,
+            46,
+            52,
+            39,
+            56,
+            71,
+            0
+          ],
+          [
+            0,
+            16,
+            45,
+            72,
+            66,
+            10,
+            53,
+            1,
+            75,
+            40,
+            12,
+            0
+          ],
+          [
+            0,
+            59,
+            32,
+            2,
+            44,
+            70,
+            28,
+            30,
+            26,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ]
+        ],
+        "gap_pct": 2.64
+      },
+      "qasa": {
+        "algorithm_name": "Quantum-Annealing Local Search (QASA)",
+        "category": "Quantum-Inspired",
+        "best_cost": 1421.37,
+        "pure_travel_time": 1421.37,
+        "penalties": 0.0,
+        "elapsed_sec": 0.4001,
+        "latency_ms": 400.07,
+        "time_to_best_ms": 0.0,
+        "iters_per_sec": 0.0,
+        "is_feasible": true,
+        "iterations": 1671,
+        "component_metrics": {
+          "two_opt_moves": 831,
+          "or_opt_moves": 840,
+          "accepted_improvements": 341,
+          "accepted_tunneling": 402,
+          "rejected_moves": 928
+        },
+        "metadata": {
+          "gamma_factor": 0.05
+        },
+        "routes": [
+          [
+            0,
+            35,
+            72,
+            48,
+            42,
+            30,
+            8,
+            47,
+            55,
+            21,
+            68,
+            0
+          ],
+          [
+            0,
+            58,
+            54,
+            31,
+            71,
+            51,
+            56,
+            27,
+            4,
+            37,
+            62,
+            0
+          ],
+          [
+            0,
+            14,
+            64,
+            17,
+            23,
+            60,
+            13,
+            45,
+            16,
+            28,
+            0
+          ],
+          [
+            0,
+            38,
+            15,
+            20,
+            29,
+            61,
+            5,
+            19,
+            69,
+            66,
+            22,
+            34,
+            0
+          ],
+          [
+            0,
+            46,
+            52,
+            57,
+            43,
+            33,
+            50,
+            63,
+            41,
+            3,
+            0
+          ],
+          [
+            0,
+            26,
+            9,
+            67,
+            6,
+            49,
+            39,
+            36,
+            25,
+            24,
+            0
+          ],
+          [
+            0,
+            2,
+            44,
+            70,
+            11,
+            65,
+            74,
+            32,
+            1,
+            59,
+            0
+          ],
+          [
+            0,
+            73,
+            7,
+            18,
+            53,
+            10,
+            75,
+            0
+          ],
+          [
+            0,
+            40,
+            0
+          ],
+          [
+            0,
+            12,
+            0
+          ]
+        ],
+        "gap_pct": -1.99
+      },
+      "qss": {
+        "algorithm_name": "Quantum Solution Swarm (QSS)",
+        "category": "Quantum-Inspired",
+        "best_cost": 1281.38,
+        "pure_travel_time": 1281.38,
+        "penalties": 0.0,
+        "elapsed_sec": 0.4067,
+        "latency_ms": 406.7,
+        "time_to_best_ms": 0.0,
+        "iters_per_sec": 0.0,
+        "is_feasible": true,
+        "iterations": 61,
+        "component_metrics": {
+          "reconstructions": 61,
+          "consensus_bias": 2.0,
+          "swarm_size": 10
+        },
+        "metadata": {
+          "swarm_size": 10
+        },
+        "routes": [
+          [
+            0,
+            35,
+            6,
+            67,
+            41,
+            9,
+            26,
+            63,
+            50,
+            0
+          ],
+          [
+            0,
+            68,
+            44,
+            70,
+            11,
+            34,
+            65,
+            2,
+            10,
+            59,
+            0
+          ],
+          [
+            0,
+            14,
+            64,
+            17,
+            23,
+            60,
+            13,
+            45,
+            16,
+            28,
+            0
+          ],
+          [
+            0,
+            58,
+            54,
+            31,
+            71,
+            51,
+            56,
+            27,
+            4,
+            37,
+            62,
+            0
+          ],
+          [
+            0,
+            46,
+            52,
+            57,
+            43,
+            33,
+            48,
+            42,
+            30,
+            0
+          ],
+          [
+            0,
+            47,
+            8,
+            32,
+            72,
+            66,
+            69,
+            19,
+            5,
+            29,
+            20,
+            53,
+            40,
+            0
+          ],
+          [
+            0,
+            55,
+            73,
+            7,
+            18,
+            15,
+            61,
+            1,
+            75,
+            38,
+            0
+          ],
+          [
+            0,
+            21,
+            74,
+            22,
+            24,
+            12,
+            25,
+            36,
+            3,
+            49,
+            39,
+            0
+          ]
+        ],
+        "gap_pct": -11.64
+      },
+      "classical_alns": {
+        "algorithm_name": "Classical ALNS (Boltzmann SA Control)",
+        "category": "Classical Baseline",
+        "best_cost": 945.14,
+        "pure_travel_time": 945.14,
+        "penalties": 0.0,
+        "elapsed_sec": 0.4008,
+        "latency_ms": 400.78,
+        "time_to_best_ms": 0.0,
+        "iters_per_sec": 0.0,
+        "is_feasible": true,
+        "iterations": 621,
+        "component_metrics": {
+          "accepted_improvements": 152,
+          "accepted_boltzmann": 231,
+          "rejected_moves": 238,
+          "k_remove": 11
+        },
+        "metadata": {
+          "destroy_fraction": 0.15,
+          "temp_factor": 0.08
+        },
+        "routes": [
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            39,
+            3,
+            36,
+            49,
+            6,
+            67,
+            52,
+            46,
+            0
+          ],
+          [
+            0,
+            14,
+            17,
+            23,
+            60,
+            45,
+            16,
+            13,
+            48,
+            64,
+            0
+          ],
+          [
+            0,
+            15,
+            29,
+            5,
+            19,
+            69,
+            66,
+            72,
+            22,
+            34,
+            74,
+            32,
+            68,
+            0
+          ],
+          [
+            0,
+            43,
+            33,
+            50,
+            63,
+            26,
+            9,
+            41,
+            57,
+            0
+          ],
+          [
+            0,
+            25,
+            62,
+            37,
+            4,
+            27,
+            51,
+            71,
+            31,
+            58,
+            35,
+            0
+          ],
+          [
+            0,
+            21,
+            2,
+            44,
+            70,
+            11,
+            65,
+            61,
+            20,
+            38,
+            0
+          ],
+          [
+            0,
+            47,
+            8,
+            18,
+            7,
+            73,
+            28,
+            42,
+            30,
+            55,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            54,
+            56,
+            24,
+            12,
+            40,
+            53,
+            10,
+            1,
+            75,
+            59,
+            0
+          ]
+        ],
+        "gap_pct": -34.83
+      },
+      "dijkstra_nn": {
+        "algorithm_name": "Dijkstra / Nearest Neighbor",
+        "category": "Classical Baseline",
+        "best_cost": 1450.25,
+        "pure_travel_time": 1450.25,
+        "penalties": 0.0,
+        "elapsed_sec": 0.001,
+        "latency_ms": 1.04,
+        "time_to_best_ms": 0.0,
+        "iters_per_sec": 0.0,
+        "is_feasible": true,
+        "iterations": 1,
+        "component_metrics": {
+          "construction_type": "Greedy Nearest Neighbor"
+        },
+        "metadata": {
+          "num_vehicles_used": 10
+        },
+        "routes": [
+          [
+            0,
+            35,
+            68,
+            21,
+            55,
+            47,
+            8,
+            30,
+            42,
+            48,
+            72,
+            0
+          ],
+          [
+            0,
+            58,
+            54,
+            31,
+            71,
+            51,
+            56,
+            27,
+            4,
+            37,
+            62,
+            0
+          ],
+          [
+            0,
+            14,
+            64,
+            17,
+            23,
+            60,
+            13,
+            45,
+            16,
+            28,
+            0
+          ],
+          [
+            0,
+            38,
+            15,
+            61,
+            29,
+            20,
+            5,
+            19,
+            66,
+            69,
+            22,
+            34,
+            0
+          ],
+          [
+            0,
+            46,
+            52,
+            57,
+            43,
+            33,
+            50,
+            63,
+            41,
+            3,
+            0
+          ],
+          [
+            0,
+            39,
+            36,
+            25,
+            49,
+            6,
+            67,
+            9,
+            26,
+            24,
+            0
+          ],
+          [
+            0,
+            32,
+            74,
+            65,
+            11,
+            70,
+            44,
+            2,
+            59,
+            1,
+            0
+          ],
+          [
+            0,
+            73,
+            7,
+            18,
+            75,
+            10,
+            53,
+            0
+          ],
+          [
+            0,
+            40,
+            0
+          ],
+          [
+            0,
+            12,
+            0
+          ]
+        ],
+        "gap_pct": 0.0
+      },
+      "clarke_wright": {
+        "algorithm_name": "Clarke-Wright Savings",
+        "category": "Classical Baseline",
+        "best_cost": 19762.81,
+        "pure_travel_time": 1762.81,
+        "penalties": 18000.0,
+        "elapsed_sec": 0.0038,
+        "latency_ms": 3.83,
+        "time_to_best_ms": 0.0,
+        "iters_per_sec": 0.0,
+        "is_feasible": false,
+        "iterations": 1,
+        "component_metrics": {
+          "savings_pairs": 2775
+        },
+        "metadata": {
+          "merged_routes": 19
+        },
+        "routes": [
+          [
+            0,
+            1,
+            10,
+            75,
+            0
+          ],
+          [
+            0,
+            2,
+            11,
+            70,
+            0
+          ],
+          [
+            0,
+            3,
+            25,
+            62,
+            0
+          ],
+          [
+            0,
+            4,
+            37,
+            54,
+            58,
+            0
+          ],
+          [
+            0,
+            5,
+            19,
+            66,
+            69,
+            72,
+            0
+          ],
+          [
+            0,
+            6,
+            49,
+            67,
+            0
+          ],
+          [
+            0,
+            7,
+            18,
+            73,
+            0
+          ],
+          [
+            0,
+            8,
+            33,
+            50,
+            52,
+            0
+          ],
+          [
+            0,
+            9,
+            26,
+            63,
+            0
+          ],
+          [
+            0,
+            12,
+            40,
+            53,
+            59,
+            0
+          ],
+          [
+            0,
+            13,
+            16,
+            45,
+            60,
+            64,
+            0
+          ],
+          [
+            0,
+            14,
+            17,
+            23,
+            28,
+            48,
+            55,
+            0
+          ],
+          [
+            0,
+            15,
+            20,
+            29,
+            61,
+            0
+          ],
+          [
+            0,
+            21,
+            32,
+            44,
+            68,
+            0
+          ],
+          [
+            0,
+            22,
+            34,
+            65,
+            74,
+            0
+          ],
+          [
+            0,
+            24,
+            27,
+            51,
+            56,
+            71,
+            0
+          ],
+          [
+            0,
+            30,
+            42,
+            43,
+            46,
+            47,
+            0
+          ],
+          [
+            0,
+            31,
+            36,
+            39,
+            41,
+            57,
+            0
+          ],
+          [
+            0,
+            35,
+            38,
+            0
+          ]
+        ],
+        "gap_pct": 1262.72
+      },
+      "classical_ga": {
+        "algorithm_name": "Classical Genetic Algorithm (GA)",
+        "category": "Classical Baseline",
+        "best_cost": 2766.85,
+        "pure_travel_time": 2766.85,
+        "penalties": 0.0,
+        "elapsed_sec": 0.4043,
+        "latency_ms": 404.34,
+        "time_to_best_ms": 0.0,
+        "iters_per_sec": 0.0,
+        "is_feasible": true,
+        "iterations": 21,
+        "component_metrics": {
+          "crossovers_done": 421,
+          "mutations_done": 159,
+          "pop_size": 50
+        },
+        "metadata": {
+          "crossover_rate": 0.85,
+          "mutation_rate": 0.15
+        },
+        "routes": [
+          [
+            0,
+            71,
+            75,
+            54,
+            4,
+            27,
+            44,
+            32,
+            58,
+            68,
+            42,
+            17,
+            0
+          ],
+          [
+            0,
+            41,
+            63,
+            38,
+            19,
+            20,
+            53,
+            40,
+            31,
+            37,
+            3,
+            0
+          ],
+          [
+            0,
+            52,
+            39,
+            49,
+            33,
+            23,
+            43,
+            56,
+            0
+          ],
+          [
+            0,
+            62,
+            67,
+            70,
+            69,
+            22,
+            55,
+            26,
+            21,
+            0
+          ],
+          [
+            0,
+            59,
+            1,
+            66,
+            57,
+            8,
+            15,
+            11,
+            34,
+            10,
+            25,
+            0
+          ],
+          [
+            0,
+            13,
+            5,
+            2,
+            51,
+            18,
+            6,
+            61,
+            35,
+            48,
+            0
+          ],
+          [
+            0,
+            46,
+            47,
+            29,
+            64,
+            74,
+            12,
+            24,
+            36,
+            9,
+            0
+          ],
+          [
+            0,
+            14,
+            65,
+            72,
+            16,
+            28,
+            45,
+            73,
+            30,
+            60,
+            0
+          ],
+          [
+            0,
+            7,
+            50,
+            0
+          ],
+          [
+            0,
+            0
+          ]
+        ],
+        "gap_pct": 90.78
+      },
+      "classical_aco": {
+        "algorithm_name": "Classical Ant Colony Optimization (ACO)",
+        "category": "Classical Baseline",
+        "best_cost": 1621.05,
+        "pure_travel_time": 1621.05,
+        "penalties": 0.0,
+        "elapsed_sec": 0.426,
+        "latency_ms": 426.02,
+        "time_to_best_ms": 0.0,
+        "iters_per_sec": 0.0,
+        "is_feasible": true,
+        "iterations": 5,
+        "component_metrics": {
+          "ants_run": 75,
+          "evaporation_rate": 0.1
+        },
+        "metadata": {
+          "num_ants": 15
+        },
+        "routes": [
+          [
+            0,
+            47,
+            55,
+            8,
+            14,
+            64,
+            23,
+            45,
+            16,
+            13,
+            0
+          ],
+          [
+            0,
+            21,
+            68,
+            32,
+            44,
+            2,
+            70,
+            15,
+            65,
+            72,
+            66,
+            69,
+            0
+          ],
+          [
+            0,
+            74,
+            38,
+            59,
+            20,
+            29,
+            5,
+            19,
+            75,
+            1,
+            10,
+            54,
+            0
+          ],
+          [
+            0,
+            35,
+            73,
+            7,
+            18,
+            33,
+            30,
+            17,
+            42,
+            0
+          ],
+          [
+            0,
+            58,
+            31,
+            40,
+            53,
+            12,
+            3,
+            36,
+            49,
+            50,
+            24,
+            0
+          ],
+          [
+            0,
+            61,
+            34,
+            22,
+            11,
+            62,
+            37,
+            27,
+            71,
+            0
+          ],
+          [
+            0,
+            56,
+            51,
+            39,
+            46,
+            52,
+            57,
+            67,
+            43,
+            41,
+            0
+          ],
+          [
+            0,
+            28,
+            26,
+            63,
+            60,
+            48,
+            9,
+            6,
+            25,
+            4,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ]
+        ],
+        "gap_pct": 11.78
+      },
+      "ortools_fast": {
+        "algorithm_name": "OR-Tools (Fast)",
+        "category": "Industry Benchmark",
+        "best_cost": 1036.08,
+        "pure_travel_time": 1036.08,
+        "penalties": 0.0,
+        "elapsed_sec": 0.4135,
+        "latency_ms": 413.5,
+        "time_to_best_ms": 0.0,
+        "iters_per_sec": 0.0,
+        "is_feasible": true,
+        "iterations": 1,
+        "component_metrics": {
+          "mode": "fast",
+          "status": "OPTIMAL_OR_FEASIBLE"
+        },
+        "metadata": {
+          "num_vehicles": 10,
+          "scale_factor": 100.0
+        },
+        "routes": [
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            58,
+            54,
+            71,
+            51,
+            24,
+            12,
+            40,
+            53,
+            10,
+            75,
+            31,
+            0
+          ],
+          [
+            0,
+            32,
+            2,
+            44,
+            70,
+            11,
+            65,
+            74,
+            1,
+            59,
+            0
+          ],
+          [
+            0,
+            57,
+            41,
+            9,
+            26,
+            67,
+            6,
+            49,
+            52,
+            46,
+            0
+          ],
+          [
+            0,
+            73,
+            7,
+            18,
+            33,
+            50,
+            63,
+            43,
+            0
+          ],
+          [
+            0,
+            38,
+            15,
+            20,
+            29,
+            61,
+            5,
+            19,
+            69,
+            66,
+            22,
+            34,
+            0
+          ],
+          [
+            0,
+            68,
+            21,
+            64,
+            48,
+            42,
+            30,
+            8,
+            47,
+            55,
+            0
+          ],
+          [
+            0,
+            39,
+            36,
+            3,
+            25,
+            62,
+            37,
+            4,
+            27,
+            56,
+            0
+          ],
+          [
+            0,
+            14,
+            17,
+            13,
+            28,
+            16,
+            45,
+            60,
+            23,
+            72,
+            35,
+            0
+          ]
+        ],
+        "gap_pct": -28.56
+      },
+      "ortools_gls": {
+        "algorithm_name": "OR-Tools (GLS)",
+        "category": "Industry Benchmark",
+        "best_cost": 1029.28,
+        "pure_travel_time": 1029.28,
+        "penalties": 0.0,
+        "elapsed_sec": 1.0018,
+        "latency_ms": 1001.81,
+        "time_to_best_ms": 0.0,
+        "iters_per_sec": 0.0,
+        "is_feasible": true,
+        "iterations": 100,
+        "component_metrics": {
+          "mode": "gls",
+          "status": "OPTIMAL_OR_FEASIBLE"
+        },
+        "metadata": {
+          "num_vehicles": 10,
+          "scale_factor": 100.0
+        },
+        "routes": [
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            58,
+            54,
+            71,
+            51,
+            24,
+            12,
+            40,
+            53,
+            10,
+            75,
+            31,
+            0
+          ],
+          [
+            0,
+            32,
+            2,
+            44,
+            70,
+            11,
+            65,
+            72,
+            1,
+            59,
+            0
+          ],
+          [
+            0,
+            57,
+            41,
+            9,
+            26,
+            67,
+            6,
+            49,
+            52,
+            46,
+            0
+          ],
+          [
+            0,
+            73,
+            7,
+            18,
+            33,
+            50,
+            63,
+            43,
+            0
+          ],
+          [
+            0,
+            38,
+            15,
+            20,
+            29,
+            61,
+            5,
+            19,
+            69,
+            66,
+            22,
+            35,
+            0
+          ],
+          [
+            0,
+            68,
+            21,
+            64,
+            48,
+            42,
+            30,
+            8,
+            47,
+            55,
+            0
+          ],
+          [
+            0,
+            39,
+            36,
+            3,
+            25,
+            62,
+            37,
+            4,
+            27,
+            56,
+            0
+          ],
+          [
+            0,
+            14,
+            17,
+            60,
+            45,
+            16,
+            28,
+            13,
+            23,
+            74,
+            34,
+            0
+          ]
+        ],
+        "gap_pct": -29.03
+      }
+    }
+  },
+  "runtime_profile": {},
+  "parameter_sweep": {},
+  "component_empirical_tests": {
+    "qalns_components": {
+      "full_adaptive_qalns": {
+        "cost": 674.53,
+        "operator_weights": {
+          "random_removal": 0.3173,
+          "worst_removal": 0.3996,
+          "related_removal": 0.3082,
+          "quantum_variance_removal": 0.3198
+        },
+        "operator_improvements": {
+          "random_removal": 35,
+          "worst_removal": 53,
+          "related_removal": 25,
+          "quantum_variance_removal": 28
+        }
+      },
+      "isolated_random_removal": {
+        "cost": 670.94,
+        "iterations": 2314,
+        "accepted_improvements": 367
+      },
+      "isolated_worst_removal": {
+        "cost": 677.32,
+        "iterations": 1486,
+        "accepted_improvements": 25
+      },
+      "isolated_related_removal": {
+        "cost": 672.58,
+        "iterations": 1492,
+        "accepted_improvements": 378
+      },
+      "isolated_quantum_variance_removal": {
+        "cost": 670.95,
+        "iterations": 1204,
+        "accepted_improvements": 194
+      },
+      "acceptance_comparison": {
+        "quantum_tunneling_cost": 674.53,
+        "classical_boltzmann_cost": 677.64,
+        "delta": -3.1,
+        "verdict": "Statistically tied / QALNS advantage"
+      },
+      "two_opt_polish": {
+        "with_periodic_polish_cost": 674.53,
+        "polish_passes": 35,
+        "timing_polish_ms": 5.13
+      },
+      "layer4_dynamic_traffic": {
+        "cold_start_cost": 821.78,
+        "warm_start_cost": 733.39,
+        "cost_reduction_pct": 10.76,
+        "latency_budget_ms": 50.0,
+        "verdict": "Warm-start preserves pre-spike structure and converges faster"
+      }
+    },
+    "qpso_components": {
+      "heuristic_seeding": {
+        "seeded_cost": 813.08,
+        "explanation": "Greedy nearest-neighbor seed guarantees initial swarm quality floor"
+      },
+      "alpha_sweep": {
+        "alpha_0.5": {
+          "cost": 817.66,
+          "time_sec": 0.151
+        },
+        "alpha_0.7": {
+          "cost": 813.08,
+          "time_sec": 0.15
+        },
+        "alpha_0.9": {
+          "cost": 828.61,
+          "time_sec": 0.152
+        }
+      }
+    },
+    "qpso_chaos_components": {
+      "cost": 818.46,
+      "chaos_triggers": 12,
+      "chaos_time_ms": 2.4,
+      "verdict": "Chaos perturbs stagnant particles; provides occasional escape in tight minima"
+    },
+    "qga_components": {
+      "delta_theta_sweep": {
+        "delta_theta_0.02pi": {
+          "cost": 819.74,
+          "rotations": 2430,
+          "mutations": 124
+        },
+        "delta_theta_0.05pi": {
+          "cost": 818.75,
+          "rotations": 2580,
+          "mutations": 131
+        },
+        "delta_theta_0.1pi": {
+          "cost": 813.35,
+          "rotations": 1770,
+          "mutations": 92
+        }
+      },
+      "limitation": "Han & Kim rotation gate tends to collapse diversity toward seed individual"
+    },
+    "qaco_components": {
+      "cost": 804.71,
+      "ants_constructed": 240,
+      "rotations_performed": 656,
+      "mean_qubit_amplitude": 0.233,
+      "limitation": "Probabilistic ant construction from scratch does not inherit greedy seed floor"
+    },
+    "qasa_components": {
+      "cost": 821.24,
+      "two_opt_moves": 1485,
+      "or_opt_moves": 1554,
+      "accepted_improvements": 380,
+      "accepted_tunneling": 489,
+      "speed_profile": "Ultra fast per-iteration throughput (~sub-20ms)"
+    },
+    "qss_components": {
+      "cost": 776.2,
+      "reconstructions": 198,
+      "consensus_bias": 2.0,
+      "limitation": "Whole-solution reconstruction per attempt limits total iterations within budget"
+    }
+  },
+  "dynamic_rerouting": {}
+}

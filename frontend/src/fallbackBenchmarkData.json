@@ -1,0 +1,355 @@
+{
+  "benchmark_dataset_results": {
+    "Micro (15 stops, 4 vehicles)": {
+      "Plain QPSO": {
+        "final_cost": 439.97,
+        "clock_time_sec": 0.0677,
+        "profiling": {
+          "matrix_lookup_ms": 0.0,
+          "qpso_math_ms": 8.134,
+          "feasibility_ms": 59.352,
+          "chaos_ms": 0.0,
+          "opt2_ms": 0.0,
+          "total_clock_sec": 0.0677,
+          "pct_qpso_math": 12.02,
+          "pct_feasibility": 87.67,
+          "pct_chaos": 0.0,
+          "pct_opt2": 0.0
+        }
+      },
+      "QPSO + Chaos": {
+        "final_cost": 439.97,
+        "clock_time_sec": 0.071,
+        "profiling": {
+          "matrix_lookup_ms": 0.0,
+          "qpso_math_ms": 6.492,
+          "feasibility_ms": 48.175,
+          "chaos_ms": 16.181,
+          "opt2_ms": 0.0,
+          "total_clock_sec": 0.071,
+          "pct_qpso_math": 9.14,
+          "pct_feasibility": 67.85,
+          "pct_chaos": 22.79,
+          "pct_opt2": 0.0
+        }
+      },
+      "QPSO + Chaos + 2-opt": {
+        "final_cost": 439.97,
+        "clock_time_sec": 0.0885,
+        "profiling": {
+          "matrix_lookup_ms": 0.0,
+          "qpso_math_ms": 8.49,
+          "feasibility_ms": 58.348,
+          "chaos_ms": 20.196,
+          "opt2_ms": 1.309,
+          "total_clock_sec": 0.0885,
+          "pct_qpso_math": 9.59,
+          "pct_feasibility": 65.9,
+          "pct_chaos": 22.81,
+          "pct_opt2": 1.48
+        }
+      },
+      "Dijkstra / Nearest Neighbor": { "final_cost": 440.0, "clock_time_sec": 0.0 },
+      "Clarke-Wright Savings": { "final_cost": 572.8, "clock_time_sec": 0.0001 },
+      "Genetic Algorithm (GA)": { "final_cost": 454.49, "clock_time_sec": 0.1186 },
+      "Ant Colony Optimization (ACO)": { "final_cost": 433.87, "clock_time_sec": 0.6953 }
+    },
+    "Small (35 stops, 6 vehicles)": {
+      "Plain QPSO": {
+        "final_cost": 813.08,
+        "clock_time_sec": 0.2571,
+        "profiling": {
+          "matrix_lookup_ms": 0.0,
+          "qpso_math_ms": 28.325,
+          "feasibility_ms": 228.332,
+          "chaos_ms": 0.0,
+          "opt2_ms": 0.0,
+          "total_clock_sec": 0.2571,
+          "pct_qpso_math": 11.02,
+          "pct_feasibility": 88.8,
+          "pct_chaos": 0.0,
+          "pct_opt2": 0.0
+        }
+      },
+      "QPSO + Chaos": {
+        "final_cost": 813.08,
+        "clock_time_sec": 0.1865,
+        "profiling": {
+          "matrix_lookup_ms": 0.0,
+          "qpso_math_ms": 20.184,
+          "feasibility_ms": 134.65,
+          "chaos_ms": 31.233,
+          "opt2_ms": 0.0,
+          "total_clock_sec": 0.1865,
+          "pct_qpso_math": 10.82,
+          "pct_feasibility": 72.2,
+          "pct_chaos": 16.75,
+          "pct_opt2": 0.0
+        }
+      },
+      "QPSO + Chaos + 2-opt": {
+        "final_cost": 810.42,
+        "clock_time_sec": 0.1554,
+        "profiling": {
+          "matrix_lookup_ms": 0.0,
+          "qpso_math_ms": 15.308,
+          "feasibility_ms": 107.785,
+          "chaos_ms": 29.369,
+          "opt2_ms": 2.707,
+          "total_clock_sec": 0.1554,
+          "pct_qpso_math": 9.85,
+          "pct_feasibility": 69.35,
+          "pct_chaos": 18.9,
+          "pct_opt2": 1.74
+        }
+      },
+      "Dijkstra / Nearest Neighbor": { "final_cost": 828.61, "clock_time_sec": 0.0001 },
+      "Clarke-Wright Savings": { "final_cost": 903.41, "clock_time_sec": 0.0005 },
+      "Genetic Algorithm (GA)": { "final_cost": 1090.71, "clock_time_sec": 0.1907 },
+      "Ant Colony Optimization (ACO)": { "final_cost": 761.09, "clock_time_sec": 1.8044 }
+    },
+    "Medium (75 stops, 10 vehicles)": {
+      "Plain QPSO": {
+        "final_cost": 1288.53,
+        "clock_time_sec": 0.3053,
+        "profiling": {
+          "matrix_lookup_ms": 0.0,
+          "qpso_math_ms": 28.574,
+          "feasibility_ms": 276.307,
+          "chaos_ms": 0.0,
+          "opt2_ms": 0.0,
+          "total_clock_sec": 0.3053,
+          "pct_qpso_math": 9.36,
+          "pct_feasibility": 90.5,
+          "pct_chaos": 0.0,
+          "pct_opt2": 0.0
+        }
+      },
+      "QPSO + Chaos": {
+        "final_cost": 1356.18,
+        "clock_time_sec": 0.3284,
+        "profiling": {
+          "matrix_lookup_ms": 0.0,
+          "qpso_math_ms": 25.557,
+          "feasibility_ms": 255.246,
+          "chaos_ms": 47.269,
+          "opt2_ms": 0.0,
+          "total_clock_sec": 0.3284,
+          "pct_qpso_math": 7.78,
+          "pct_feasibility": 77.73,
+          "pct_chaos": 14.39,
+          "pct_opt2": 0.0
+        }
+      },
+      "QPSO + Chaos + 2-opt": {
+        "final_cost": 1344.16,
+        "clock_time_sec": 0.3335,
+        "profiling": {
+          "matrix_lookup_ms": 0.0,
+          "qpso_math_ms": 25.136,
+          "feasibility_ms": 245.72,
+          "chaos_ms": 55.326,
+          "opt2_ms": 6.91,
+          "total_clock_sec": 0.3335,
+          "pct_qpso_math": 7.54,
+          "pct_feasibility": 73.67,
+          "pct_chaos": 16.59,
+          "pct_opt2": 2.07
+        }
+      },
+      "Dijkstra / Nearest Neighbor": { "final_cost": 1387.54, "clock_time_sec": 0.0003 },
+      "Clarke-Wright Savings": { "final_cost": 1762.81, "clock_time_sec": 0.0018 },
+      "Genetic Algorithm (GA)": { "final_cost": 2704.43, "clock_time_sec": 0.8309 },
+      "Ant Colony Optimization (ACO)": { "final_cost": 1187.87, "clock_time_sec": 6.7811 }
+    },
+    "Large (150 stops, 15 vehicles)": {
+      "Plain QPSO": {
+        "final_cost": 2027.77,
+        "clock_time_sec": 0.6148,
+        "profiling": {
+          "matrix_lookup_ms": 0.0,
+          "qpso_math_ms": 46.978,
+          "feasibility_ms": 567.406,
+          "chaos_ms": 0.0,
+          "opt2_ms": 0.0,
+          "total_clock_sec": 0.6148,
+          "pct_qpso_math": 7.64,
+          "pct_feasibility": 92.29,
+          "pct_chaos": 0.0,
+          "pct_opt2": 0.0
+        }
+      },
+      "QPSO + Chaos": {
+        "final_cost": 2029.4,
+        "clock_time_sec": 0.5158,
+        "profiling": {
+          "matrix_lookup_ms": 0.0,
+          "qpso_math_ms": 34.1,
+          "feasibility_ms": 394.7,
+          "chaos_ms": 86.664,
+          "opt2_ms": 0.0,
+          "total_clock_sec": 0.5158,
+          "pct_qpso_math": 6.61,
+          "pct_feasibility": 76.53,
+          "pct_chaos": 16.8,
+          "pct_opt2": 0.0
+        }
+      },
+      "QPSO + Chaos + 2-opt": {
+        "final_cost": 1978.85,
+        "clock_time_sec": 0.6687,
+        "profiling": {
+          "matrix_lookup_ms": 0.0,
+          "qpso_math_ms": 46.042,
+          "feasibility_ms": 493.91,
+          "chaos_ms": 112.197,
+          "opt2_ms": 16.18,
+          "total_clock_sec": 0.6687,
+          "pct_qpso_math": 6.88,
+          "pct_feasibility": 73.86,
+          "pct_chaos": 16.78,
+          "pct_opt2": 2.42
+        }
+      },
+      "Dijkstra / Nearest Neighbor": { "final_cost": 2029.4, "clock_time_sec": 0.0052 },
+      "Clarke-Wright Savings": { "final_cost": 3141.98, "clock_time_sec": 0.0266 },
+      "Genetic Algorithm (GA)": { "final_cost": 5760.06, "clock_time_sec": 0.3836 },
+      "Ant Colony Optimization (ACO)": { "final_cost": 2291.25, "clock_time_sec": 5.5428 }
+    },
+    "XL Real City Graph (300 stops, 25 vehicles)": {
+      "Plain QPSO": {
+        "final_cost": 2968.76,
+        "clock_time_sec": 0.8432,
+        "profiling": {
+          "matrix_lookup_ms": 0.0,
+          "qpso_math_ms": 59.474,
+          "feasibility_ms": 783.291,
+          "chaos_ms": 0.0,
+          "opt2_ms": 0.0,
+          "total_clock_sec": 0.8432,
+          "pct_qpso_math": 7.05,
+          "pct_feasibility": 92.89,
+          "pct_chaos": 0.0,
+          "pct_opt2": 0.0
+        }
+      },
+      "QPSO + Chaos": {
+        "final_cost": 2968.76,
+        "clock_time_sec": 1.0886,
+        "profiling": {
+          "matrix_lookup_ms": 0.0,
+          "qpso_math_ms": 64.361,
+          "feasibility_ms": 857.519,
+          "chaos_ms": 166.255,
+          "opt2_ms": 0.0,
+          "total_clock_sec": 1.0886,
+          "pct_qpso_math": 5.91,
+          "pct_feasibility": 78.77,
+          "pct_chaos": 15.27,
+          "pct_opt2": 0.0
+        }
+      },
+      "QPSO + Chaos + 2-opt": {
+        "final_cost": 2830.72,
+        "clock_time_sec": 1.5239,
+        "profiling": {
+          "matrix_lookup_ms": 0.0,
+          "qpso_math_ms": 86.331,
+          "feasibility_ms": 1168.209,
+          "chaos_ms": 230.091,
+          "opt2_ms": 38.632,
+          "total_clock_sec": 1.5239,
+          "pct_qpso_math": 5.67,
+          "pct_feasibility": 76.66,
+          "pct_chaos": 15.1,
+          "pct_opt2": 2.54
+        }
+      },
+      "Dijkstra / Nearest Neighbor": { "final_cost": 2968.76, "clock_time_sec": 0.0056 },
+      "Clarke-Wright Savings": { "final_cost": 5357.38, "clock_time_sec": 0.0326 },
+      "Genetic Algorithm (GA)": { "final_cost": 12068.6, "clock_time_sec": 0.7176 },
+      "Ant Colony Optimization (ACO)": { "final_cost": 3869.95, "clock_time_sec": 18.5117 }
+    }
+  },
+  "parameter_grid_sweep": {
+    "alpha_sweep": [
+      { "alpha": 0.4, "final_cost": 810.42, "clock_sec": 0.3111 },
+      { "alpha": 0.5, "final_cost": 818.89, "clock_sec": 0.1558 },
+      { "alpha": 0.6, "final_cost": 810.42, "clock_sec": 0.1579 },
+      { "alpha": 0.7, "final_cost": 810.42, "clock_sec": 0.1207 },
+      { "alpha": 0.8, "final_cost": 821.24, "clock_sec": 0.1839 },
+      { "alpha": 0.9, "final_cost": 821.24, "clock_sec": 0.1775 },
+      { "alpha": 1.0, "final_cost": 821.24, "clock_sec": 0.1404 }
+    ],
+    "swarm_size_sweep": [
+      { "swarm_size": 10, "final_cost": 821.24, "clock_sec": 0.046 },
+      { "swarm_size": 20, "final_cost": 810.42, "clock_sec": 0.1107 },
+      { "swarm_size": 30, "final_cost": 810.42, "clock_sec": 0.1382 },
+      { "swarm_size": 50, "final_cost": 810.42, "clock_sec": 0.2019 },
+      { "swarm_size": 100, "final_cost": 810.42, "clock_sec": 0.3855 }
+    ],
+    "opt2_frequency_sweep": [
+      { "2opt_frequency": 1,  "final_cost": 810.42, "clock_sec": 0.1523, "opt2_time_ms": 8.823 },
+      { "2opt_frequency": 5,  "final_cost": 810.42, "clock_sec": 0.1208, "opt2_time_ms": 2.921 },
+      { "2opt_frequency": 10, "final_cost": 810.42, "clock_sec": 0.1305, "opt2_time_ms": 2.758 },
+      { "2opt_frequency": 15, "final_cost": 810.42, "clock_sec": 0.1395, "opt2_time_ms": 2.471 },
+      { "2opt_frequency": 25, "final_cost": 810.42, "clock_sec": 0.1267, "opt2_time_ms": 2.092 },
+      { "2opt_frequency": 50, "final_cost": 810.42, "clock_sec": 0.1347, "opt2_time_ms": 2.125 }
+    ]
+  },
+  "dynamic_rerouting_results": {
+    "test_scenario": "Dynamic 35-stop CVRP under 2.5x-3.5x Traffic Spike on 25% edges",
+    "results": {
+      "Dijkstra (Cold)": {
+        "cost": 1092.33,
+        "latency_ms": 0.2,
+        "restart_type": "Cold Restart",
+        "iterations": 1
+      },
+      "GA (Cold)": {
+        "cost": 992.12,
+        "latency_ms": 1746.99,
+        "restart_type": "Cold Restart",
+        "iterations": 200
+      },
+      "ACO (Cold)": {
+        "cost": 818.0,
+        "latency_ms": 3385.9,
+        "restart_type": "Cold Restart",
+        "iterations": 100
+      },
+      "Plain QPSO (Cold)": {
+        "cost": 924.11,
+        "latency_ms": 190.86,
+        "restart_type": "Cold Restart",
+        "iterations": 120
+      },
+      "QRay Warm-Restart": {
+        "cost": 1080.46,
+        "latency_ms": 58.45,
+        "restart_type": "Warm Restart (Layer 4)",
+        "iterations": 35
+      }
+    },
+    "speedup_summary": {
+      "warm_vs_cold_qpso": 3.27,
+      "warm_vs_aco": 57.93,
+      "warm_vs_ga": 29.89
+    }
+  },
+  "chaos_ablation": {
+    "seeds_tested": [42, 123, 456, 789, 999],
+    "average_plain_cost": 904.98,
+    "average_chaos_cost": 997.88,
+    "average_delta": 92.9,
+    "verdict": "Neutral/Keep as Guard",
+    "details_by_seed": [
+      { "seed": 42, "plain_cost": 813.08, "chaos_cost": 813.08, "delta": 0.0 },
+      { "seed": 123, "plain_cost": 844.02, "chaos_cost": 910.08, "delta": 66.06 },
+      { "seed": 456, "plain_cost": 844.75, "chaos_cost": 844.75, "delta": 0.0 },
+      { "seed": 789, "plain_cost": 707.34, "chaos_cost": 746.96, "delta": 39.62 },
+      { "seed": 999, "plain_cost": 1315.72, "chaos_cost": 1674.51, "delta": 358.79 }
+    ]
+  }
+}
+

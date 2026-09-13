@@ -1,0 +1,150 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap');
+@import 'leaflet/dist/leaflet.css';
+
+:root {
+  --bg-dark: #09090b;
+  --bg-surface: #121215;
+  --bg-card: #141417;
+  
+  --primary: #ffffff;
+  --text-main: #ffffff;
+  --text-muted: #a1a1aa;
+  --text-dim: #71717a;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  border: none !important;
+}
+
+body {
+  background-color: var(--bg-dark);
+  color: var(--text-main);
+  font-family: 'Inter', sans-serif;
+  min-height: 100vh;
+  line-height: 1.5;
+  overflow-x: hidden;
+}
+
+code, pre {
+  font-family: 'JetBrains Mono', monospace;
+}
+
+/* Borderless Card Utility */
+.glass-card {
+  background: var(--bg-card);
+  border: none !important;
+  border-radius: 10px;
+  box-shadow: none !important;
+}
+
+.glass-pill {
+  background: #ffffff;
+  color: #000000;
+  border: none !important;
+  border-radius: 9999px;
+  padding: 3px 10px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* Material Solid White Button (Active) */
+.btn-material-white {
+  background: #ffffff !important;
+  color: #000000 !important;
+  font-weight: 800 !important;
+  border: none !important;
+  border-radius: 8px !important;
+  transition: opacity 0.15s ease !important;
+  cursor: pointer;
+}
+
+.btn-material-white:hover {
+  opacity: 0.9 !important;
+}
+
+/* Material Dark Button (Inactive) */
+.btn-material-outline {
+  background: #27272a !important;
+  color: #a1a1aa !important;
+  font-weight: 600 !important;
+  border: none !important;
+  border-radius: 8px !important;
+  transition: all 0.15s ease !important;
+  cursor: pointer;
+}
+
+.btn-material-outline:hover {
+  background: #3f3f46 !important;
+  color: #ffffff !important;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg-dark);
+}
+::-webkit-scrollbar-thumb {
+  background: #27272a;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #3f3f46;
+}
+
+/* Text */
+.gradient-text {
+  color: #ffffff;
+}
+
+/* Range Slider Material Style */
+input[type=range] {
+  accent-color: #ffffff;
+}
+
+/* Vehicle Road Navigation Beacon & Pulse Animations */
+@keyframes vehicleRadarPulse {
+  0% {
+    transform: scale(0.6);
+    opacity: 0.85;
+  }
+  70% {
+    transform: scale(2.0);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(2.2);
+    opacity: 0;
+  }
+}
+
+.vehicle-pulse-ring {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  animation: vehicleRadarPulse 1.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) infinite;
+  pointer-events: none;
+}
+
+.vehicle-nav-beacon {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.1s ease-out;
+}
+
+/* Ensure Leaflet tooltips never block map route lines */
+.leaflet-tooltip {
+  display: none !important;
+}
+
