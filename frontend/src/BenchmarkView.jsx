@@ -276,7 +276,7 @@ export default function BenchmarkView() {
   const runLiveBenchmark = async (scaleKey) => {
     setLoadingScale(scaleKey);
     try {
-      const resp = await fetch('http://localhost:8000/api/benchmark/run', {
+      const resp = await fetch('/api/benchmark/run', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ scale: scaleKey, algo: 'all' })
