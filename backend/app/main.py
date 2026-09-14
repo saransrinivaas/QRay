@@ -1127,12 +1127,12 @@ def simulate_full_scenario(req: SimulateRequest):
 
     if can_reroute:
         decision_message = (
-            f"⚡ Traffic ahead on {disrupted_stop.get('name', 'upcoming corridor')} (+{traffic_delay_min} min delay). "
-            f"Faster route found (-{reroute_saved_min} min)! Rerouting fleet around blockade to deliver all locations."
+            f"Traffic ahead on {disrupted_stop.get('name', 'upcoming corridor')} (+{traffic_delay_min} min delay). "
+            f"Faster route found (-{reroute_saved_min} min). Rerouting fleet around blockade to deliver all locations."
         )
     else:
         decision_message = (
-            f"⚠ Heavy traffic ahead on {disrupted_stop.get('name', 'road corridor')} (+{traffic_delay_min} min delay). "
+            f"Heavy traffic ahead on {disrupted_stop.get('name', 'road corridor')} (+{traffic_delay_min} min delay). "
             f"Current route is optimal (no turnaround available). Continuing on current route to complete all deliveries."
         )
 

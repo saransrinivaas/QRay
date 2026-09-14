@@ -1209,17 +1209,13 @@ export default function DemoTimelineView() {
             {/* ── Live Navigation HUD Toast ── */}
             <div style={{
               position: 'absolute', top: '12px', left: '12px', zIndex: 1000,
-              background: isPastDisruption
-                ? (timeline?.disruption?.can_reroute !== false ? 'rgba(8, 16, 36, 0.92)' : 'rgba(32, 16, 12, 0.92)')
-                : 'var(--panel-glass)',
+              background: 'rgba(6, 10, 22, 0.94)',
               backdropFilter: 'blur(14px)',
               WebkitBackdropFilter: 'blur(14px)',
-              border: isPastDisruption
-                ? (timeline?.disruption?.can_reroute !== false ? '1px solid var(--cyan)' : '1px solid #f59e0b')
-                : '1px solid var(--border)',
+              border: '1px solid var(--border)',
               borderRadius: '14px', padding: '10px 14px', maxWidth: '380px',
               animation: 'fadeInDown 0.25s ease',
-              boxShadow: '0 12px 28px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.04)'
+              boxShadow: '0 12px 28px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.03)'
             }}>
               {!isPastDisruption ? (
                 <div>
@@ -1259,7 +1255,7 @@ export default function DemoTimelineView() {
                     </span>
                   </div>
                   <div style={{ fontSize: '0.72rem', color: '#fca5a5', lineHeight: 1.4 }}>
-                    {timeline?.disruption?.decision_message || 'Congestion detected on primary arterial path. Instant warm-restart reoptimized fleet trajectories.'}
+                    {(timeline?.disruption?.decision_message || 'Congestion detected on primary arterial path. Instant warm-restart reoptimized fleet trajectories.').replace(/[\u{1F300}-\u{1F9FF}]|[\u{2600}-\u{26FF}]|[\u{2700}-\u{27BF}]|⚡|⚠/gu, '').trim()}
                   </div>
                 </div>
               )}

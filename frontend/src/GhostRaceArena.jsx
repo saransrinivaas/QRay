@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { 
   Play, Pause, RotateCcw, Trophy, Gauge, Zap, 
   Activity, Clock, Route, CheckCircle2, ChevronRight,
-  ShieldCheck, AlertCircle, Sparkles, TrendingDown, ArrowRight
+  ShieldCheck, AlertCircle, Sparkles, TrendingDown, ArrowRight, Info
 } from 'lucide-react';
 import {
   ResponsiveContainer, LineChart, Line, XAxis, YAxis, Tooltip, CartesianGrid
@@ -318,6 +318,26 @@ export default function GhostRaceArena() {
             </span>
           </div>
 
+          {/* What is a Ghost Run? — Jury Briefing Card */}
+          <div style={{
+            background: 'rgba(56, 189, 248, 0.05)',
+            border: '1px solid rgba(56, 189, 248, 0.18)',
+            borderRadius: '10px',
+            padding: '8px 12px',
+            fontSize: '0.71rem',
+            color: 'var(--text-dim)',
+            lineHeight: 1.4,
+            display: 'flex',
+            alignItems: 'flex-start',
+            gap: '8px'
+          }}>
+            <Info size={14} style={{ color: 'var(--cyan)', marginTop: '2px', flexShrink: 0 }} />
+            <div>
+              <strong style={{ color: 'var(--text)', fontFamily: 'var(--font-heading)' }}>What is a Ghost Run? </strong>
+              A simultaneous side-by-side execution where 4 optimization algorithms (Q-Ray, OR-Tools, GA, and Greedy) race on the exact same delivery stops, vehicle limits, and road coordinates under identical constraints—like a racing ghost car. It visually proves which algorithm completes deliveries first and minimizes total kilometers without simulation bias.
+            </div>
+          </div>
+
           {/* Real-time Split Delta Ticker Banner */}
           <div style={{
             background: 'linear-gradient(90deg, rgba(90, 106, 245, 0.12) 0%, rgba(43, 201, 216, 0.12) 100%)',
@@ -391,7 +411,7 @@ export default function GhostRaceArena() {
                           {racer.name}
                           {isLead && (
                             <span style={{ fontSize: '0.62rem', padding: '1px 6px', borderRadius: '4px', background: 'rgba(108,123,255,0.18)', color: 'var(--indigo)', fontWeight: 700, border: '1px solid rgba(108,123,255,0.3)' }}>
-                              👑 Optimum Leader
+                              LEAD OPTIMAL
                             </span>
                           )}
                           <span style={{
@@ -423,23 +443,31 @@ export default function GhostRaceArena() {
                     </div>
                   </div>
 
-                  {/* Visual Race Track Trackbar */}
+                  {/* Visual Race Track Trackbar — Expanded 46px Height */}
                   <div style={{
                     position: 'relative',
-                    height: '28px',
-                    background: 'var(--bg)',
-                    borderRadius: '8px',
+                    height: '46px',
+                    background: '#04060e',
+                    borderRadius: '10px',
                     overflow: 'hidden',
                     border: '1px solid var(--border)',
                     display: 'flex',
                     alignItems: 'center',
-                    padding: '0 8px'
+                    padding: '0 10px'
                   }}>
-                    {/* Road Grid Dashes */}
+                    {/* Road Grid Markings & Center Dashed Lane */}
                     <div style={{
                       position: 'absolute',
                       inset: 0,
-                      backgroundImage: 'repeating-linear-gradient(90deg, rgba(120,140,220,0.06) 0px, rgba(120,140,220,0.06) 20px, transparent 20px, transparent 40px)'
+                      backgroundImage: 'repeating-linear-gradient(90deg, rgba(255,255,255,0.03) 0px, rgba(255,255,255,0.03) 30px, transparent 30px, transparent 60px)'
+                    }} />
+                    <div style={{
+                      position: 'absolute',
+                      left: 0,
+                      right: 0,
+                      top: '50%',
+                      height: '1px',
+                      borderTop: '1px dashed rgba(255,255,255,0.12)'
                     }} />
 
                     {/* Progress Bar Fill */}
@@ -449,41 +477,69 @@ export default function GhostRaceArena() {
                       top: 0,
                       bottom: 0,
                       width: `${racerProg}%`,
-                      background: isLead ? 'linear-gradient(90deg, transparent 0%, var(--indigo) 100%)' : 'linear-gradient(90deg, transparent 0%, rgba(120,140,220,0.3) 100%)',
-                      opacity: 0.45,
+                      background: isLead 
+                        ? 'linear-gradient(90deg, transparent 0%, rgba(90, 106, 245, 0.25) 100%)' 
+                        : 'linear-gradient(90deg, transparent 0%, rgba(120, 140, 220, 0.15) 100%)',
                       transition: 'width 0.1s linear'
                     }} />
 
-                    {/* Moving Vehicle Marker */}
+                    {/* Large, High-Visibility Moving Vehicle (Car / Fleet Pod) */}
                     <div style={{
                       position: 'absolute',
-                      left: `calc(${racerProg}% - 14px)`,
-                      width: '28px',
-                      height: '28px',
-                      borderRadius: '50%',
-                      background: isLead ? 'var(--indigo)' : 'var(--panel-2)',
-                      border: '1px solid var(--border)',
+                      left: `calc(${Math.min(92, Math.max(1, racerProg))}% - 30px)`,
+                      width: '68px',
+                      height: '32px',
+                      borderRadius: '8px',
+                      background: isLead 
+                        ? 'linear-gradient(135deg, #1e1b4b 0%, #0f172a 100%)' 
+                        : 'linear-gradient(135deg, #111827 0%, #090d16 100%)',
+                      border: `1.5px solid ${racer.color}`,
                       display: 'flex',
                       alignItems: 'center',
                       justifyContent: 'center',
-                      color: '#fff',
-                      boxShadow: isLead ? '0 0 12px rgba(108,123,255,0.5)' : 'none',
+                      gap: '5px',
+                      padding: '0 6px',
+                      boxShadow: isLead ? `0 0 16px ${racer.glow}` : '0 2px 8px rgba(0,0,0,0.6)',
                       transition: 'left 0.1s linear',
-                      zIndex: 2
+                      zIndex: 3
                     }}>
-                      🏎️
+                      {/* Detailed Vehicle Vector SVG */}
+                      <svg width="20" height="14" viewBox="0 0 24 16" fill="none" style={{ flexShrink: 0 }}>
+                        <path d="M2 11 L4 6 C4.5 4.5 6 4 7.5 4 L14 4 C15.5 4 17 5 18 7 L21 9 C22 9.5 22.5 10.5 22.5 11.5 L22.5 13 C22.5 13.5 22 14 21.5 14 L20 14 C20 12.5 18.5 12.5 18.5 14 L7.5 14 C7.5 12.5 6 12.5 6 14 L3 14 C2.5 14 2 13.5 2 13 Z" fill={racer.color} opacity="0.9" />
+                        <path d="M8 5.5 L13.5 5.5 L16.5 8 L8 8 Z" fill="#020308" opacity="0.75" />
+                        <circle cx="6.75" cy="13.5" r="2.2" fill="#020308" stroke={racer.color} strokeWidth="1" />
+                        <circle cx="18.25" cy="13.5" r="2.2" fill="#020308" stroke={racer.color} strokeWidth="1" />
+                      </svg>
+                      <span style={{
+                        fontSize: '0.62rem',
+                        fontWeight: 800,
+                        color: racer.color,
+                        fontFamily: 'monospace',
+                        letterSpacing: '-0.02em',
+                        whiteSpace: 'nowrap'
+                      }}>
+                        {racer.id === 'qray' ? 'QRAY' : racer.id === 'ortools' ? 'OR-T' : racer.id === 'ga' ? 'GA' : 'GREEDY'}
+                      </span>
                     </div>
 
-                    {/* Finish Line Marker */}
+                    {/* Finish Line Gate */}
                     <div style={{
                       position: 'absolute',
                       right: '6px',
-                      fontSize: '0.66rem',
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: '4px',
+                      fontSize: '0.64rem',
                       fontWeight: 700,
                       color: racerProg >= 100 ? 'var(--cyan)' : 'var(--text-faint)',
-                      fontFamily: 'var(--font-mono)'
+                      fontFamily: 'var(--font-mono)',
+                      background: 'rgba(0,0,0,0.6)',
+                      padding: '2px 6px',
+                      borderRadius: '4px',
+                      border: '1px solid rgba(255,255,255,0.08)'
                     }}>
-                      [END]
+                      <span style={{ width: '4px', height: '14px', background: racerProg >= 100 ? 'var(--cyan)' : 'rgba(255,255,255,0.2)', borderRadius: '1px' }} />
+                      FINISH
                     </div>
                   </div>
 
