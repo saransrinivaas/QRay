@@ -1,150 +1,356 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&family=Space+Grotesk:wght@400;500;600;700&display=swap');
 @import 'leaflet/dist/leaflet.css';
 
 :root {
-  --bg-dark: #09090b;
-  --bg-surface: #121215;
-  --bg-card: #141417;
-  
-  --primary: #ffffff;
-  --text-main: #ffffff;
-  --text-muted: #a1a1aa;
-  --text-dim: #71717a;
+  /* Quantum Console Design Tokens */
+  --bg: #020308;
+  --panel: #060A18;
+  --panel-2: #0A1024;
+  --panel-glass: rgba(8, 12, 26, 0.6);
+  --border: rgba(100, 120, 200, 0.12);
+  --indigo: #5A6AF5;
+  --cyan: #2BC9D6;
+  --violet: #7A5AF0;
+  --text: #DCE1F5;
+  --text-dim: #77809E;
+  --text-faint: #414A68;
+
+  /* Typography */
+  --font-heading: 'Space Grotesk', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-body: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+
+  /* Backwards compatibility aliases */
+  --bg-dark: var(--bg);
+  --bg-surface: var(--panel);
+  --bg-card: var(--panel-glass);
+  --primary: var(--indigo);
+  --text-main: var(--text);
+  --text-muted: var(--text-dim);
 }
 
 * {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
-  border: none !important;
 }
 
-body {
-  background-color: var(--bg-dark);
-  color: var(--text-main);
-  font-family: 'Inter', sans-serif;
+html, body {
+  background-color: var(--bg);
+  color: var(--text);
+  font-family: var(--font-body);
   min-height: 100vh;
   line-height: 1.5;
   overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-heading);
+  color: var(--text);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.num-readout {
+  font-family: var(--font-heading);
+  font-weight: 600;
 }
 
 code, pre {
-  font-family: 'JetBrains Mono', monospace;
+  font-family: var(--font-mono);
 }
 
-/* Borderless Card Utility */
+/* ── Quantum Glass Panel ── */
 .glass-card {
-  background: var(--bg-card);
-  border: none !important;
-  border-radius: 10px;
-  box-shadow: none !important;
+  background: var(--panel-glass);
+  border: 1px solid var(--border) !important;
+  border-radius: 14px;
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.04);
+  position: relative;
 }
 
-.glass-pill {
-  background: #ffffff;
-  color: #000000;
-  border: none !important;
-  border-radius: 9999px;
-  padding: 3px 10px;
-  font-size: 0.72rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
+.glass-card-solid {
+  background: var(--panel);
+  border: 1px solid var(--border) !important;
+  border-radius: 14px;
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.04);
 }
 
-/* Material Solid White Button (Active) */
-.btn-material-white {
-  background: #ffffff !important;
-  color: #000000 !important;
-  font-weight: 800 !important;
-  border: none !important;
-  border-radius: 8px !important;
-  transition: opacity 0.15s ease !important;
-  cursor: pointer;
+/* ── Scenario Card Hairline Top Highlight ── */
+.scenario-card-hairline {
+  position: relative;
 }
 
-.btn-material-white:hover {
-  opacity: 0.9 !important;
-}
-
-/* Material Dark Button (Inactive) */
-.btn-material-outline {
-  background: #27272a !important;
-  color: #a1a1aa !important;
-  font-weight: 600 !important;
-  border: none !important;
-  border-radius: 8px !important;
-  transition: all 0.15s ease !important;
-  cursor: pointer;
-}
-
-.btn-material-outline:hover {
-  background: #3f3f46 !important;
-  color: #ffffff !important;
-}
-
-/* Custom Scrollbar */
-::-webkit-scrollbar {
-  width: 6px;
-}
-::-webkit-scrollbar-track {
-  background: var(--bg-dark);
-}
-::-webkit-scrollbar-thumb {
-  background: #27272a;
-  border-radius: 4px;
-}
-::-webkit-scrollbar-thumb:hover {
-  background: #3f3f46;
-}
-
-/* Text */
-.gradient-text {
-  color: #ffffff;
-}
-
-/* Range Slider Material Style */
-input[type=range] {
-  accent-color: #ffffff;
-}
-
-/* Vehicle Road Navigation Beacon & Pulse Animations */
-@keyframes vehicleRadarPulse {
-  0% {
-    transform: scale(0.6);
-    opacity: 0.85;
-  }
-  70% {
-    transform: scale(2.0);
-    opacity: 0;
-  }
-  100% {
-    transform: scale(2.2);
-    opacity: 0;
-  }
-}
-
-.vehicle-pulse-ring {
+.scenario-card-hairline::before {
+  content: '';
   position: absolute;
   top: 0;
   left: 0;
-  width: 100%;
-  height: 100%;
-  border-radius: 50%;
-  animation: vehicleRadarPulse 1.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) infinite;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent 0%, var(--indigo) 35%, var(--cyan) 65%, transparent 100%);
+  border-top-left-radius: 14px;
+  border-top-right-radius: 14px;
   pointer-events: none;
+  z-index: 2;
 }
 
-.vehicle-nav-beacon {
+/* ── Stat Tile Accent Bar & Glow ── */
+.stat-tile-accent {
   position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: transform 0.1s ease-out;
+  overflow: hidden;
+  background: var(--panel-2);
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.03);
+  transition: all 0.25s ease;
 }
 
-/* Ensure Leaflet tooltips never block map route lines */
-.leaflet-tooltip {
+.stat-tile-accent::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: linear-gradient(180deg, var(--indigo) 0%, var(--cyan) 100%);
+  border-radius: 2px;
+  z-index: 2;
+}
+
+@keyframes statTileGlowPulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(43, 201, 214, 0);
+    border-color: var(--border);
+  }
+  50% {
+    box-shadow: 0 0 18px rgba(43, 201, 214, 0.35);
+    border-color: var(--cyan);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(43, 201, 214, 0);
+    border-color: var(--border);
+  }
+}
+
+.stat-tile-solving {
+  animation: statTileGlowPulse 1.1s ease-in-out infinite !important;
+}
+
+/* ── Live / Active Pulsing Elements ── */
+@keyframes livePulseSlow {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.4;
+  }
+}
+
+.live-indicator-slow {
+  animation: livePulseSlow 1.8s ease-in-out infinite;
+}
+
+@keyframes cyanPulsing {
+  0% {
+    box-shadow: 0 0 0 0 rgba(43, 201, 214, 0.6);
+  }
+  70% {
+    box-shadow: 0 0 0 8px rgba(43, 201, 214, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(43, 201, 214, 0);
+  }
+}
+
+.live-beacon {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: var(--cyan);
+  display: inline-block;
+  box-shadow: 0 0 10px var(--cyan);
+  animation: cyanPulsing 2s infinite cubic-bezier(0.4, 0, 0.6, 1);
+}
+
+.badge-live-cyan {
+  background: rgba(43, 201, 214, 0.12);
+  color: var(--cyan);
+  border: 1px solid rgba(43, 201, 214, 0.35);
+  font-family: var(--font-heading);
+  font-weight: 700;
+  border-radius: 4px;
+  padding: 2px 7px;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+
+/* ── Primary CTA Button ── */
+.btn-material-white,
+.btn-quantum-primary {
+  background: linear-gradient(135deg, var(--indigo) 0%, var(--violet) 100%) !important;
+  color: #ffffff !important;
+  font-family: var(--font-body) !important;
+  font-weight: 700 !important;
+  border: 1px solid rgba(255, 255, 255, 0.18) !important;
+  border-radius: 8px !important;
+  box-shadow: 0 4px 20px rgba(90, 106, 245, 0.35) !important;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  cursor: pointer;
+}
+
+.btn-material-white:hover,
+.btn-quantum-primary:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 24px rgba(90, 106, 245, 0.55) !important;
+}
+
+.btn-material-white:active,
+.btn-quantum-primary:active {
+  transform: translateY(0px);
+}
+
+/* ── Secondary Button ── */
+.btn-material-outline,
+.btn-quantum-secondary {
+  background: rgba(10, 16, 36, 0.55) !important;
+  color: var(--text-dim) !important;
+  font-family: var(--font-body) !important;
+  font-weight: 600 !important;
+  border: 1px solid var(--border) !important;
+  border-radius: 8px !important;
+  transition: all 0.2s ease !important;
+  cursor: pointer;
+}
+
+.btn-material-outline:hover,
+.btn-quantum-secondary:hover {
+  background: var(--panel-2) !important;
+  color: var(--text) !important;
+  border-color: rgba(90, 106, 245, 0.35) !important;
+}
+
+/* ── Inputs & Selects ── */
+select, input[type="text"], input[type="number"] {
+  background: var(--panel-2) !important;
+  color: var(--text) !important;
+  border: 1px solid var(--border) !important;
+  outline: none;
+  font-family: var(--font-body);
+  transition: all 0.2s ease;
+}
+
+select:hover, input[type="text"]:hover, input[type="number"]:hover {
+  border-color: rgba(90, 106, 245, 0.35) !important;
+}
+
+select:focus, input[type="text"]:focus, input[type="number"]:focus {
+  border-color: var(--indigo) !important;
+  box-shadow: 0 0 0 2px rgba(90, 106, 245, 0.25);
+}
+
+input[type=range] {
+  accent-color: var(--cyan);
+}
+
+/* ── Orchestrated Staggered Page Entrance ── */
+@keyframes pageFadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.stagger-enter-1 {
+  animation: pageFadeUp 0.4s ease-out 0ms both;
+}
+
+.stagger-enter-2 {
+  animation: pageFadeUp 0.4s ease-out 80ms both;
+}
+
+.stagger-enter-3 {
+  animation: pageFadeUp 0.4s ease-out 160ms both;
+}
+
+.stagger-enter-4 {
+  animation: pageFadeUp 0.4s ease-out 240ms both;
+}
+
+/* ── Quantum Background Animations ── */
+@keyframes orbitRotateSlow {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes orbitRotateReverse {
+  from {
+    transform: rotate(360deg);
+  }
+  to {
+    transform: rotate(0deg);
+  }
+}
+
+.quantum-orbit-ring {
+  transform-origin: center;
+  animation: orbitRotateSlow 110s linear infinite;
+}
+
+.quantum-orbit-ring-fast {
+  transform-origin: center;
+  animation: orbitRotateReverse 140s linear infinite;
+}
+
+/* ── Custom Scrollbar ── */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--panel-2);
+  border-radius: 4px;
+  border: 1px solid var(--border);
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--indigo);
+}
+
+/* ── Map Tooltip Styling ── */
+.leaflet-popup-content-wrapper, .leaflet-popup-tip {
+  background: var(--panel-2) !important;
+  color: var(--text) !important;
+  border: 1px solid var(--border) !important;
+  border-radius: 8px !important;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.7) !important;
+}
+
+.custom-map-tooltip {
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+  transition: opacity 0.2s ease-in-out !important;
+}
+
+.custom-map-tooltip::before {
   display: none !important;
 }
+
 

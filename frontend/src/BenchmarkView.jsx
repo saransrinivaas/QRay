@@ -188,10 +188,10 @@ export default function BenchmarkView() {
     }));
 
   const getBarColor = (item) => {
-    if (item.isPrimary) return "#38bdf8"; // Bright sky blue for Primary
-    if (item.category === "Industry Benchmark") return "#34d399"; // Emerald for OR-Tools
-    if (item.category === "Quantum-Inspired") return "#818cf8"; // Indigo/Violet for Quantum-inspired
-    return "#52525b"; // Slate/Zinc for classical
+    if (item.isPrimary) return "#6C7BFF"; // var(--indigo) for Primary
+    if (item.category === "Industry Benchmark") return "#33E1E8"; // var(--cyan) for OR-Tools Industry Benchmark
+    if (item.category === "Quantum-Inspired") return "#8B6CFF"; // var(--violet) for Quantum-inspired
+    return "#545E88"; // var(--text-faint) for classical
   };
 
   return (
@@ -200,7 +200,7 @@ export default function BenchmarkView() {
       {/* ── Dataset Scale Selector & Live Run Controls ── */}
       <div className="glass-card" style={{ padding: '10px 18px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '14px', flexShrink: 0, flexWrap: 'wrap' }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '12px', flexWrap: 'wrap' }}>
-          <span style={{ fontSize: '0.75rem', fontWeight: 800, textTransform: 'uppercase', color: '#a1a1aa', letterSpacing: '0.05em' }}>
+          <span style={{ fontSize: '0.74rem', fontWeight: 700, textTransform: 'uppercase', color: 'var(--text-faint)', letterSpacing: '0.05em', fontFamily: 'var(--font-heading)' }}>
             Dataset Scale:
           </span>
           <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
@@ -210,7 +210,7 @@ export default function BenchmarkView() {
                 <button
                   key={key}
                   onClick={() => setSelectedScale(key)}
-                  className={isSelected ? 'btn-material-white' : 'btn-material-outline'}
+                  className={isSelected ? 'btn-quantum-primary' : 'btn-quantum-secondary'}
                   style={{
                     padding: '6px 14px',
                     fontSize: '0.80rem',
@@ -236,35 +236,29 @@ export default function BenchmarkView() {
               gap: '6px',
               fontSize: '0.74rem',
               fontWeight: 700,
-              color: '#34d399',
-              background: 'rgba(52,211,153,0.12)',
+              color: 'var(--cyan)',
+              background: 'rgba(51, 225, 232, 0.12)',
               padding: '4px 10px',
               borderRadius: '6px',
-              border: '1px solid rgba(52,211,153,0.3)'
+              border: '1px solid rgba(51, 225, 232, 0.35)',
+              fontFamily: 'var(--font-heading)'
             }}>
-              <span style={{ width: '7px', height: '7px', borderRadius: '50%', background: '#34d399', boxShadow: '0 0 8px #34d399' }} />
+              <span className="live-beacon" />
               100% Live Python Verified ({liveInfo?.timestamp || 'Ready'})
             </span>
           )}
           <button
             onClick={() => runLiveBenchmark(selectedScale)}
             disabled={loadingScale === selectedScale}
+            className="btn-quantum-primary"
             style={{
               padding: '7px 16px',
               fontSize: '0.80rem',
-              fontWeight: 800,
-              borderRadius: '6px',
-              border: '1px solid rgba(56,189,248,0.4)',
-              background: loadingScale === selectedScale 
-                ? 'rgba(56,189,248,0.2)' 
-                : 'linear-gradient(135deg, #0284c7 0%, #0369a1 100%)',
-              color: '#ffffff',
+              fontWeight: 700,
               cursor: loadingScale === selectedScale ? 'wait' : 'pointer',
               display: 'flex',
               alignItems: 'center',
               gap: '6px',
-              boxShadow: '0 2px 8px rgba(2,132,199,0.35)',
-              transition: 'all 0.2s'
             }}
           >
             <Zap size={14} style={{ animation: loadingScale === selectedScale ? 'spin 1s linear infinite' : 'none' }} />
@@ -278,16 +272,16 @@ export default function BenchmarkView() {
           
           {/* Left: The Complete Empirical Table */}
           <div className="glass-card" style={{ padding: '18px', display: 'flex', flexDirection: 'column', height: '100%', minHeight: '520px' }}>
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '14px', paddingBottom: '10px', borderBottom: '1px solid rgba(255,255,255,0.1)' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '14px', paddingBottom: '10px', borderBottom: '1px solid var(--border)' }}>
               <div>
-                <h2 style={{ fontSize: '1.02rem', fontWeight: 800, color: '#fff', margin: 0 }}>
+                <h2 style={{ fontSize: '1.02rem', fontWeight: 700, color: 'var(--text)', margin: 0, fontFamily: 'var(--font-heading)' }}>
                   Empirical Results Table ({results.length} Algorithms)
                 </h2>
-                <span style={{ fontSize: '0.72rem', color: '#a1a1aa' }}>
+                <span style={{ fontSize: '0.72rem', color: 'var(--text-dim)' }}>
                   14 algorithms evaluated across matched time budgets
                 </span>
               </div>
-              <span style={{ fontSize: '0.72rem', padding: '3px 8px', borderRadius: '4px', background: '#27272a', color: '#e4e4e7' }}>
+              <span style={{ fontSize: '0.72rem', padding: '3px 8px', borderRadius: '4px', background: 'var(--panel-2)', color: 'var(--text-dim)', border: '1px solid var(--border)', fontFamily: 'var(--font-heading)' }}>
                 Sorted by Cost ↓
               </span>
             </div>
@@ -295,7 +289,7 @@ export default function BenchmarkView() {
             <div style={{ flex: 1, overflowY: 'auto' }}>
               <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left', fontSize: '0.82rem' }}>
                 <thead>
-                  <tr style={{ borderBottom: '1px solid rgba(255,255,255,0.15)', color: '#a1a1aa', fontSize: '0.74rem', textTransform: 'uppercase', letterSpacing: '0.04em' }}>
+                  <tr style={{ borderBottom: '1px solid var(--border)', color: 'var(--text-faint)', fontSize: '0.72rem', textTransform: 'uppercase', letterSpacing: '0.04em', fontFamily: 'var(--font-heading)' }}>
                     <th style={{ padding: '8px 10px' }}>Algorithm</th>
                     <th style={{ padding: '8px 10px' }}>Category</th>
                     <th style={{ padding: '8px 10px', textAlign: 'right' }}>Cost ↓</th>
@@ -308,17 +302,16 @@ export default function BenchmarkView() {
                   {results.map((row, idx) => {
                     const isImproved = row.gapNum < 0;
                     const isBase = row.gapNum === 0;
-                    const isFailed = !row.feasible;
 
                     return (
                       <tr
                         key={idx}
                         style={{
-                          borderBottom: '1px solid rgba(255,255,255,0.06)',
+                          borderBottom: '1px solid var(--border)',
                           background: row.isPrimary
-                            ? 'rgba(56,189,248,0.08)'
+                            ? 'rgba(108,123,255,0.12)'
                             : row.category === 'Industry Benchmark'
-                              ? 'rgba(52,211,153,0.04)'
+                              ? 'rgba(51,225,232,0.06)'
                               : 'transparent',
                           transition: 'background 0.15s'
                         }}
@@ -326,7 +319,7 @@ export default function BenchmarkView() {
                         {/* Algorithm Name */}
                         <td style={{ padding: '9px 10px' }}>
                           <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                            <span style={{ fontWeight: row.isPrimary ? 800 : 600, color: row.isPrimary ? '#38bdf8' : '#ffffff' }}>
+                            <span style={{ fontWeight: row.isPrimary ? 700 : 500, color: row.isPrimary ? 'var(--indigo)' : 'var(--text)', fontFamily: row.isPrimary ? 'var(--font-heading)' : 'inherit' }}>
                               {row.name.replaceAll('Google ', '')}
                             </span>
                           </div>
@@ -336,47 +329,53 @@ export default function BenchmarkView() {
                         <td style={{ padding: '9px 10px' }}>
                           <span style={{
                             fontSize: '0.68rem',
-                            fontWeight: 700,
+                            fontWeight: 600,
                             padding: '2px 7px',
                             borderRadius: '4px',
                             background: row.category === 'Quantum-Inspired'
-                              ? 'rgba(56,189,248,0.15)'
+                              ? 'rgba(139,108,255,0.15)'
                               : row.category === 'Industry Benchmark'
-                                ? 'rgba(52,211,153,0.15)'
-                                : 'rgba(255,255,255,0.08)',
+                                ? 'rgba(51,225,232,0.12)'
+                                : 'var(--panel-2)',
                             color: row.category === 'Quantum-Inspired'
-                              ? '#38bdf8'
+                              ? 'var(--violet)'
                               : row.category === 'Industry Benchmark'
-                                ? '#34d399'
-                                : '#a1a1aa'
+                                ? 'var(--cyan)'
+                                : 'var(--text-dim)',
+                            border: row.category === 'Quantum-Inspired'
+                              ? '1px solid rgba(139,108,255,0.3)'
+                              : row.category === 'Industry Benchmark'
+                                ? '1px solid rgba(51,225,232,0.3)'
+                                : '1px solid var(--border)',
+                            fontFamily: 'var(--font-heading)'
                           }}>
                             {row.category}
                           </span>
                         </td>
 
                         {/* Cost */}
-                        <td style={{ padding: '9px 10px', textAlign: 'right', fontWeight: 800, color: '#ffffff', fontFamily: 'JetBrains Mono, monospace' }}>
+                        <td style={{ padding: '9px 10px', textAlign: 'right', fontWeight: 600, color: 'var(--text)', fontFamily: 'var(--font-heading)' }}>
                           {row.cost.toFixed(2)}
                         </td>
 
                         {/* Gap */}
-                        <td style={{ padding: '9px 10px', textAlign: 'right', fontWeight: 700, fontFamily: 'JetBrains Mono, monospace' }}>
+                        <td style={{ padding: '9px 10px', textAlign: 'right', fontWeight: 600, fontFamily: 'var(--font-heading)' }}>
                           <span style={{
-                            color: isImproved ? '#4ade80' : isBase ? '#a1a1aa' : '#f87171'
+                            color: isImproved ? 'var(--cyan)' : isBase ? 'var(--text-dim)' : '#f87171'
                           }}>
                             {row.gap}
                           </span>
                         </td>
 
                         {/* Execution Time */}
-                        <td style={{ padding: '9px 10px', textAlign: 'right', color: '#e4e4e7', fontFamily: 'JetBrains Mono, monospace' }}>
+                        <td style={{ padding: '9px 10px', textAlign: 'right', color: 'var(--text-dim)', fontFamily: 'var(--font-mono)' }}>
                           {row.time}
                         </td>
 
                         {/* Feasible Icon */}
                         <td style={{ padding: '9px 10px', textAlign: 'center' }}>
                           {row.feasible ? (
-                            <span title="Pass (Feasible: zero violations)" style={{ color: '#4ade80', fontSize: '1.05rem' }}>✅</span>
+                            <span title="Pass (Feasible: zero violations)" style={{ color: 'var(--cyan)', fontSize: '1.05rem' }}>✅</span>
                           ) : (
                             <span title="Fail (Violated constraints)" style={{ color: '#f87171', fontSize: '1.05rem' }}>❌</span>
                           )}
@@ -393,18 +392,18 @@ export default function BenchmarkView() {
           <div style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
             <div className="glass-card" style={{ padding: '18px', display: 'flex', flexDirection: 'column', height: '420px' }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '10px' }}>
-                <h3 style={{ fontSize: '0.98rem', fontWeight: 800, color: '#fff', margin: 0 }}>
+                <h3 style={{ fontSize: '0.96rem', fontWeight: 700, color: 'var(--text)', margin: 0, fontFamily: 'var(--font-heading)' }}>
                   Route Cost Comparison (Lower is Better)
                 </h3>
-                <div style={{ display: 'flex', gap: '10px', fontSize: '0.68rem' }}>
-                  <span style={{ display: 'flex', alignItems: 'center', gap: '4px', color: '#38bdf8' }}>
-                    <span style={{ width: '8px', height: '8px', background: '#38bdf8', borderRadius: '2px' }} /> Quantum ALNS+
+                <div style={{ display: 'flex', gap: '10px', fontSize: '0.68rem', fontFamily: 'var(--font-heading)' }}>
+                  <span style={{ display: 'flex', alignItems: 'center', gap: '4px', color: 'var(--indigo)' }}>
+                    <span style={{ width: '8px', height: '8px', background: 'var(--indigo)', borderRadius: '2px' }} /> Quantum ALNS+
                   </span>
-                  <span style={{ display: 'flex', alignItems: 'center', gap: '4px', color: '#34d399' }}>
-                    <span style={{ width: '8px', height: '8px', background: '#34d399', borderRadius: '2px' }} /> OR-Tools
+                  <span style={{ display: 'flex', alignItems: 'center', gap: '4px', color: 'var(--cyan)' }}>
+                    <span style={{ width: '8px', height: '8px', background: 'var(--cyan)', borderRadius: '2px' }} /> OR-Tools
                   </span>
-                  <span style={{ display: 'flex', alignItems: 'center', gap: '4px', color: '#a1a1aa' }}>
-                    <span style={{ width: '8px', height: '8px', background: '#52525b', borderRadius: '2px' }} /> Classical
+                  <span style={{ display: 'flex', alignItems: 'center', gap: '4px', color: 'var(--text-faint)' }}>
+                    <span style={{ width: '8px', height: '8px', background: 'var(--text-faint)', borderRadius: '2px' }} /> Classical
                   </span>
                 </div>
               </div>
@@ -412,11 +411,11 @@ export default function BenchmarkView() {
               <div style={{ flex: 1, minHeight: 0 }}>
                 <ResponsiveContainer width="100%" height="100%">
                   <BarChart data={chartData} layout="vertical" margin={{ left: 10, right: 24, top: 10, bottom: 10 }}>
-                    <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.06)" horizontal={false} />
-                    <XAxis type="number" stroke="#71717a" tick={{ fontSize: 11 }} />
-                    <YAxis dataKey="name" type="category" width={140} stroke="#a1a1aa" tick={{ fontSize: 10 }} />
+                    <CartesianGrid strokeDasharray="3 3" stroke="rgba(120,140,220,0.14)" horizontal={false} />
+                    <XAxis type="number" stroke="var(--text-faint)" tick={{ fill: 'var(--text-dim)', fontSize: 11, fontFamily: 'var(--font-heading)' }} />
+                    <YAxis dataKey="name" type="category" width={140} stroke="var(--text-faint)" tick={{ fill: 'var(--text-dim)', fontSize: 10, fontFamily: 'var(--font-body)' }} />
                     <Tooltip
-                      contentStyle={{ background: '#18181b', border: '1px solid rgba(255,255,255,0.18)', borderRadius: '8px', fontSize: '0.80rem' }}
+                      contentStyle={{ background: 'var(--panel-2)', border: '1px solid var(--border)', borderRadius: '8px', fontSize: '0.80rem', color: 'var(--text)' }}
                       formatter={(value, name, item) => [`${value} cost (${item.payload.gap} vs base)`, item.payload.category]}
                     />
                     <Bar dataKey="cost" radius={[0, 4, 4, 0]}>
@@ -430,22 +429,22 @@ export default function BenchmarkView() {
             </div>
 
             {/* Empirical Takeaways Box */}
-            <div className="glass-card" style={{ padding: '16px 18px', background: 'rgba(24,24,27,0.85)' }}>
-              <div style={{ fontSize: '0.78rem', fontWeight: 800, color: '#38bdf8', textTransform: 'uppercase', letterSpacing: '0.04em', marginBottom: '6px' }}>
+            <div className="glass-card" style={{ padding: '16px 18px', background: 'var(--panel-glass)' }}>
+              <div style={{ fontSize: '0.78rem', fontWeight: 700, color: 'var(--indigo)', textTransform: 'uppercase', letterSpacing: '0.04em', marginBottom: '6px', fontFamily: 'var(--font-heading)' }}>
                 Key Empirical Findings
               </div>
-              <ul style={{ margin: 0, paddingLeft: '16px', fontSize: '0.76rem', color: '#d4d4d8', lineHeight: 1.6 }}>
+              <ul style={{ margin: 0, paddingLeft: '16px', fontSize: '0.76rem', color: 'var(--text-dim)', lineHeight: 1.6 }}>
                 <li>
-                  <strong>Adaptive Quantum ALNS+ (Primary)</strong> outperforms Classical ALNS (668.4 vs 677.6 on Small, 924.8 vs 943.2 on Medium) and OR-Tools GLS while executing in matched sub-second budgets.
+                  <strong style={{ color: 'var(--text)' }}>Adaptive Quantum ALNS+ (Primary)</strong> outperforms Classical ALNS (668.4 vs 677.6 on Small, 924.8 vs 943.2 on Medium) and OR-Tools GLS while executing in matched sub-second budgets.
                 </li>
                 <li>
-                  <strong>Linear Anchor-Guided Repair:</strong> Eliminates quadratic CPU bottlenecks, matching Classical ALNS in iteration speed (&gt;1,000 it/s) while Lorentzian tunneling escapes local minima.
+                  <strong style={{ color: 'var(--text)' }}>Linear Anchor-Guided Repair:</strong> Eliminates quadratic CPU bottlenecks, matching Classical ALNS in iteration speed (&gt;1,000 it/s) while Lorentzian tunneling escapes local minima.
                 </li>
                 <li>
-                  <strong>Statistically Verified:</strong> Achieves 80% to 90% head-to-head win rate across randomized seeds on Small and Medium scales.
+                  <strong style={{ color: 'var(--text)' }}>Statistically Verified:</strong> Achieves 80% to 90% head-to-head win rate across randomized seeds on Small and Medium scales.
                 </li>
                 <li>
-                  <strong>100% Feasibility Pass Rate:</strong> Strict zero-violation enforcement prevents invalid splits or vehicle capacity exceedance.
+                  <strong style={{ color: 'var(--text)' }}>100% Feasibility Pass Rate:</strong> Strict zero-violation enforcement prevents invalid splits or vehicle capacity exceedance.
                 </li>
               </ul>
             </div>

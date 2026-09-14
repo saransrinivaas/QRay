@@ -1119,13 +1119,11 @@ def simulate_full_scenario(req: SimulateRequest):
     reroute_saved_min = rng.randint(6, 12)
 
     req_mode = getattr(req, "traffic_mode", "auto") or "auto"
-    if req_mode == "reroute":
-        can_reroute = True
-    elif req_mode == "no_turnaround":
+    if req_mode == "no_turnaround":
         can_reroute = False
     else:
-        # "auto" evaluation: checks if an alternate turn exists
-        can_reroute = (rng.random() > 0.25)
+        # Default and 'reroute'/'auto' mode: always perform intelligent quantum detour
+        can_reroute = True
 
     if can_reroute:
         decision_message = (
@@ -1160,10 +1158,12 @@ def simulate_full_scenario(req: SimulateRequest):
         v_split = max(1, min(len(r_path) - 2, int(split_ratio * (len(r_path) - 1))))
         v_curr_pos = r_path[v_split]
 
-        # Record the old route that was canceled for red polyline rendering
-        old_canceled_ahead = r_path[v_split:]
-        if old_canceled_ahead:
-            old_canceled_paths.append(old_canceled_ahead)
+        # Record ONLY the blocked corridor ahead (from current vehicle position to disrupted stop) for red polyline rendering
+        next_stop_path_idx = min(range(len(r_path)), key=lambda i: (r_path[i]["lat"] - disrupted_stop["lat"])**2 + (r_path[i]["lng"] - disrupted_stop["lng"])**2)
+        end_blocked_idx = max(v_split + 2, min(len(r_path) - 1, next_stop_path_idx))
+        blocked_corridor_ahead = r_path[v_split:end_blocked_idx + 1]
+        if blocked_corridor_ahead and len(blocked_corridor_ahead) >= 2:
+            old_canceled_paths.append(blocked_corridor_ahead)
 
         v_stop_progs = []
         for s in r_stops:
@@ -1195,7 +1195,24 @@ def simulate_full_scenario(req: SimulateRequest):
             "is_depot": False,
             "demand": 0
         }
-        detour_seq = [start_node] + detour_remaining + [depot_stop]
+
+        # Calculate a perpendicular bypass waypoint to turn off the blocked direct road
+        d_lat = disrupted_stop["lat"] - v_curr_pos["lat"]
+        d_lng = disrupted_stop["lng"] - v_curr_pos["lng"]
+        direct_dist = math.sqrt(d_lat**2 + d_lng**2)
+        if direct_dist > 1e-4:
+            norm_lat = -d_lng / direct_dist
+            norm_lng = d_lat / direct_dist
+            bypass_wp = {
+                "lat": v_curr_pos["lat"] + 0.35 * d_lat + 0.010 * norm_lat,
+                "lng": v_curr_pos["lng"] + 0.35 * d_lng + 0.010 * norm_lng,
+                "name": "Alternate Arterial Bypass",
+                "is_depot": False,
+                "demand": 0
+            }
+            detour_seq = [start_node, bypass_wp] + detour_remaining + [depot_stop]
+        else:
+            detour_seq = [start_node] + detour_remaining + [depot_stop]
 
         detour_raw = []
         detour_dist_km = 0.0

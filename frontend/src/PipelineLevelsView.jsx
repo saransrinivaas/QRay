@@ -70,7 +70,7 @@ const STAGE_TIMING_MAP = {
   l5_feasibility: 'decode_feasibility'
 };
 
-/* ─────────── Monochrome Route Map ─────────── */
+/* ─────────── Quantum Console Route Map ─────────── */
 function RouteMap({ stops, routes }) {
   if (!stops || stops.length === 0) return null;
   const svgW = 210, svgH = 160, pad = 14;
@@ -87,20 +87,21 @@ function RouteMap({ stops, routes }) {
   const stopMap = {};
   stops.forEach(s => { stopMap[s.id] = toSVG(s.x, s.y); });
 
+  const routeColors = ['#5A6AF5', '#2BC9D6', '#7A5AF0', '#5A6AF5', '#2BC9D6'];
+
   return (
     <svg width={svgW} height={svgH} style={{ display: 'block', margin: '0 auto' }}>
       {routes && routes.map((route, ri) => {
         const pts = route.map(id => stopMap[id]).filter(Boolean).map(p => `${p.sx},${p.sy}`).join(' ');
-        const opacities = [1.0, 0.75, 0.55, 0.4, 0.3];
-        const strokeWidths = [2.0, 1.6, 1.4, 1.2, 1.0];
+        const col = routeColors[ri % routeColors.length];
         return pts ? (
           <polyline
             key={ri}
             points={pts}
             fill="none"
-            stroke="#ffffff"
-            strokeOpacity={opacities[ri % opacities.length]}
-            strokeWidth={strokeWidths[ri % strokeWidths.length]}
+            stroke={col}
+            strokeOpacity={0.85}
+            strokeWidth={1.8}
             strokeLinejoin="round"
           />
         ) : null;
@@ -115,7 +116,7 @@ function RouteMap({ stops, routes }) {
             cx={p.sx}
             cy={p.sy}
             r={isDepot ? 5 : 2.5}
-            fill={isDepot ? '#ffffff' : '#71717a'}
+            fill={isDepot ? '#2BC9D6' : '#77809E'}
             stroke={isDepot ? '#ffffff' : 'none'}
             strokeWidth="1.5"
           />
@@ -198,15 +199,15 @@ export default function PipelineLevelsView() {
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', height: '100%', minHeight: 0 }}>
-      {/* Top Controls Bar (Monochrome) */}
-      <div className="glass-card" style={{ padding: '10px 16px', display: 'flex', gap: '16px', alignItems: 'center', flexShrink: 0, flexWrap: 'wrap', border: '1px solid rgba(255,255,255,0.15)' }}>
+      {/* Top Controls Bar */}
+      <div className="glass-card" style={{ padding: '10px 16px', display: 'flex', gap: '16px', alignItems: 'center', flexShrink: 0, flexWrap: 'wrap' }}>
         {[
           { label: 'Stops', val: numNodes, set: setNumNodes, min: 10, max: 40, step: 5 },
           { label: 'Swarm', val: swarmSize, set: setSwarmSize, min: 10, max: 40, step: 5 },
           { label: 'Iterations', val: maxIters, set: setMaxIters, min: 20, max: 100, step: 10 }
         ].map(cfg => (
           <div key={cfg.label} style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-            <span style={{ fontSize: '0.72rem', color: '#a1a1aa' }}>{cfg.label}:</span>
+            <span style={{ fontSize: '0.72rem', color: 'var(--text-faint)', fontWeight: 500 }}>{cfg.label}:</span>
             <input
               type="number"
               value={cfg.val}
@@ -215,9 +216,8 @@ export default function PipelineLevelsView() {
               step={cfg.step}
               onChange={e => cfg.set(Number(e.target.value))}
               style={{
-                width: '60px', padding: '4px 6px', borderRadius: '4px',
-                background: '#18181b', color: '#fff', fontSize: '0.78rem',
-                border: '1px solid rgba(255,255,255,0.15)', outline: 'none'
+                width: '60px', padding: '4px 6px', borderRadius: '6px',
+                fontSize: '0.78rem', outline: 'none'
               }}
             />
           </div>
@@ -226,7 +226,7 @@ export default function PipelineLevelsView() {
         <button
           onClick={runSolve}
           disabled={solving}
-          className="btn-material-white"
+          className="btn-quantum-primary"
           style={{ marginLeft: 'auto', padding: '8px 18px', fontSize: '0.82rem', display: 'flex', alignItems: 'center', gap: '6px' }}
         >
           {solving ? <Loader2 size={14} className="spin" /> : <Activity size={14} />}
@@ -234,7 +234,7 @@ export default function PipelineLevelsView() {
         </button>
 
         {error && (
-          <div style={{ fontSize: '0.75rem', color: '#ffffff', display: 'flex', gap: '4px', alignItems: 'center' }}>
+          <div style={{ fontSize: '0.75rem', color: '#fca5a5', display: 'flex', gap: '4px', alignItems: 'center' }}>
             <AlertTriangle size={13} /> {error}
           </div>
         )}
@@ -242,10 +242,10 @@ export default function PipelineLevelsView() {
 
       {/* Empty State */}
       {!solved && !solving && (
-        <div style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#71717a', flexDirection: 'column', gap: '8px' }}>
-          <Activity size={36} strokeWidth={1.5} color="#ffffff" />
-          <div style={{ fontSize: '0.95rem', color: '#ffffff', fontWeight: 600 }}>Architecture Stepper</div>
-          <div style={{ fontSize: '0.82rem', color: '#a1a1aa' }}>
+        <div style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--text-dim)', flexDirection: 'column', gap: '8px' }}>
+          <Activity size={36} strokeWidth={1.5} color="var(--indigo)" />
+          <div style={{ fontSize: '0.95rem', color: 'var(--text)', fontWeight: 700, fontFamily: 'var(--font-heading)' }}>Architecture Stepper</div>
+          <div style={{ fontSize: '0.82rem', color: 'var(--text-dim)' }}>
             Click Run Solve to step through all 5 layers sequentially.
           </div>
         </div>
@@ -253,37 +253,37 @@ export default function PipelineLevelsView() {
 
       {/* Running State */}
       {solving && (
-        <div style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', flexDirection: 'column', gap: '10px', color: '#a1a1aa' }}>
-          <Loader2 size={36} className="spin" color="#ffffff" />
-          <div style={{ fontSize: '0.9rem', color: '#ffffff' }}>Executing solve...</div>
+        <div style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', flexDirection: 'column', gap: '10px', color: 'var(--text-dim)' }}>
+          <Loader2 size={36} className="spin" color="var(--indigo)" />
+          <div style={{ fontSize: '0.9rem', color: 'var(--text)', fontFamily: 'var(--font-heading)' }}>Executing solve...</div>
         </div>
       )}
 
-      {/* Interactive Step-by-Step Level Walker (Monochrome) */}
+      {/* Interactive Step-by-Step Level Walker */}
       {solved && log.length > 0 && (
         <div style={{ flex: 1, display: 'grid', gridTemplateColumns: '1fr 320px', gap: '14px', minHeight: 0 }}>
           
           {/* Main Stage View */}
           <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', minHeight: 0 }}>
             
-            {/* Iteration Slider Bar (Monochrome) */}
-            <div className="glass-card" style={{ padding: '10px 18px', display: 'flex', flexDirection: 'column', gap: '8px', flexShrink: 0, border: '1px solid rgba(255,255,255,0.15)' }}>
+            {/* Iteration Slider Bar */}
+            <div className="glass-card" style={{ padding: '10px 18px', display: 'flex', flexDirection: 'column', gap: '8px', flexShrink: 0 }}>
               <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                  <span style={{ fontSize: '0.75rem', color: '#a1a1aa', textTransform: 'uppercase', letterSpacing: '0.05em', fontWeight: 700 }}>
+                  <span style={{ fontSize: '0.72rem', color: 'var(--text-faint)', textTransform: 'uppercase', letterSpacing: '0.05em', fontWeight: 600, fontFamily: 'var(--font-heading)' }}>
                     Iteration:
                   </span>
-                  <span style={{ fontSize: '1.2rem', fontWeight: 900, color: '#ffffff', fontFamily: 'monospace' }}>
+                  <span style={{ fontSize: '1.2rem', fontWeight: 700, color: 'var(--text)', fontFamily: 'var(--font-heading)' }}>
                     {iterIdx + 1}
                   </span>
-                  <span style={{ fontSize: '0.75rem', color: '#71717a' }}>
+                  <span style={{ fontSize: '0.75rem', color: 'var(--text-faint)' }}>
                     / {log.length}
                   </span>
                 </div>
 
                 <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-                  <span style={{ fontSize: '0.75rem', color: '#a1a1aa' }}>Best Cost:</span>
-                  <span style={{ fontSize: '1rem', fontWeight: 800, color: '#ffffff', fontFamily: 'monospace' }}>
+                  <span style={{ fontSize: '0.75rem', color: 'var(--text-faint)' }}>Best Cost:</span>
+                  <span style={{ fontSize: '1.05rem', fontWeight: 700, color: 'var(--cyan)', fontFamily: 'var(--font-heading)' }}>
                     {frame?.global_best_cost}
                   </span>
                 </div>
@@ -291,7 +291,7 @@ export default function PipelineLevelsView() {
 
               {/* Slider */}
               <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-                <span style={{ fontSize: '0.7rem', color: '#71717a', fontFamily: 'monospace' }}>1</span>
+                <span style={{ fontSize: '0.70rem', color: 'var(--text-faint)', fontFamily: 'var(--font-heading)' }}>1</span>
                 <input
                   type="range"
                   min={0}
@@ -303,16 +303,16 @@ export default function PipelineLevelsView() {
                   }}
                   style={{
                     flex: 1,
-                    accentColor: '#ffffff',
+                    accentColor: 'var(--cyan)',
                     cursor: 'pointer',
                     height: '6px'
                   }}
                 />
-                <span style={{ fontSize: '0.7rem', color: '#71717a', fontFamily: 'monospace' }}>{log.length}</span>
+                <span style={{ fontSize: '0.70rem', color: 'var(--text-faint)', fontFamily: 'var(--font-heading)' }}>{log.length}</span>
               </div>
             </div>
 
-            {/* Stepper Dots/Chips (Monochrome) */}
+            {/* Stepper Dots/Chips */}
             <div style={{ display: 'flex', gap: '6px', alignItems: 'center', flexShrink: 0 }}>
               {PIPELINE_STEPS.map((s, i) => {
                 const isCurrent = i === stepIdx;
@@ -326,9 +326,9 @@ export default function PipelineLevelsView() {
                       style={{
                         flex: 1,
                         padding: '8px 10px',
-                        borderRadius: '6px',
-                        background: isCurrent ? 'rgba(255,255,255,0.12)' : isPassed ? 'rgba(255,255,255,0.04)' : 'transparent',
-                        border: `1px solid ${isCurrent ? '#ffffff' : isPassed ? 'rgba(255,255,255,0.2)' : 'rgba(255,255,255,0.08)'}`,
+                        borderRadius: '8px',
+                        background: isCurrent ? 'rgba(108,123,255,0.18)' : isPassed ? 'rgba(16,27,66,0.5)' : 'var(--panel-2)',
+                        border: `1px solid ${isCurrent ? 'var(--indigo)' : isPassed ? 'rgba(108,123,255,0.3)' : 'var(--border)'}`,
                         cursor: 'pointer',
                         display: 'flex',
                         alignItems: 'center',
@@ -336,53 +336,52 @@ export default function PipelineLevelsView() {
                         transition: 'all 0.15s ease'
                       }}
                     >
-                      <StepIcon size={14} color={isCurrent ? '#ffffff' : isPassed ? '#d4d4d8' : '#52525b'} />
+                      <StepIcon size={14} color={isCurrent ? 'var(--indigo)' : isPassed ? 'var(--text)' : 'var(--text-faint)'} />
                       <div style={{ display: 'flex', flexDirection: 'column' }}>
-                        <span style={{ fontSize: '0.62rem', fontWeight: 800, color: isCurrent ? '#ffffff' : '#71717a' }}>
+                        <span style={{ fontSize: '0.62rem', fontWeight: 700, color: isCurrent ? 'var(--indigo)' : 'var(--text-faint)', fontFamily: 'var(--font-heading)' }}>
                           {s.stepNum}
                         </span>
-                        <span style={{ fontSize: '0.72rem', fontWeight: 700, color: isCurrent ? '#ffffff' : isPassed ? '#a1a1aa' : '#52525b', whiteSpace: 'nowrap' }}>
+                        <span style={{ fontSize: '0.72rem', fontWeight: 600, color: isCurrent ? 'var(--text)' : isPassed ? 'var(--text-dim)' : 'var(--text-faint)', whiteSpace: 'nowrap' }}>
                           {s.name}
                         </span>
                       </div>
                     </div>
                     {i < PIPELINE_STEPS.length - 1 && (
-                      <div style={{ width: '10px', height: '1px', background: i < stepIdx ? '#ffffff' : 'rgba(255,255,255,0.15)', flexShrink: 0 }} />
+                      <div style={{ width: '10px', height: '1px', background: i < stepIdx ? 'var(--indigo)' : 'var(--border)', flexShrink: 0 }} />
                     )}
                   </React.Fragment>
                 );
               })}
             </div>
 
-            {/* Current Step Detailed Card (Monochrome & Concise) */}
+            {/* Current Step Detailed Card */}
             <div className="glass-card" style={{
               flex: 1,
               padding: '22px 26px',
               display: 'flex',
               flexDirection: 'column',
               gap: '16px',
-              border: '1px solid rgba(255,255,255,0.2)',
               minHeight: 0
             }}>
               
               {/* Step Header */}
               <div style={{ display: 'flex', alignItems: 'center', gap: '14px' }}>
                 <div style={{
-                  width: 44, height: 44, borderRadius: '8px',
-                  background: 'rgba(255,255,255,0.08)',
-                  border: '1px solid rgba(255,255,255,0.25)',
+                  width: 44, height: 44, borderRadius: '10px',
+                  background: 'rgba(108,123,255,0.15)',
+                  border: '1px solid rgba(108,123,255,0.3)',
                   display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0
                 }}>
-                  {React.createElement(currentStep.icon, { size: 22, color: '#ffffff' })}
+                  {React.createElement(currentStep.icon, { size: 22, color: 'var(--indigo)' })}
                 </div>
                 <div>
-                  <div style={{ fontSize: '0.68rem', fontWeight: 800, letterSpacing: '0.08em', color: '#a1a1aa', textTransform: 'uppercase' }}>
+                  <div style={{ fontSize: '0.68rem', fontWeight: 700, letterSpacing: '0.08em', color: 'var(--indigo)', textTransform: 'uppercase', fontFamily: 'var(--font-heading)' }}>
                     {currentStep.stepNum} · {currentStep.visualBadge}
                   </div>
-                  <div style={{ fontSize: '1.2rem', fontWeight: 800, color: '#ffffff', lineHeight: 1.2 }}>
+                  <div style={{ fontSize: '1.25rem', fontWeight: 700, color: 'var(--text)', lineHeight: 1.2, fontFamily: 'var(--font-heading)' }}>
                     {currentStep.name}
                   </div>
-                  <div style={{ fontSize: '0.78rem', color: '#71717a' }}>
+                  <div style={{ fontSize: '0.78rem', color: 'var(--text-dim)' }}>
                     {currentStep.subTitle}
                   </div>
                 </div>
@@ -391,22 +390,25 @@ export default function PipelineLevelsView() {
                 <div style={{ marginLeft: 'auto' }}>
                   {currentStep.alwaysRuns ? (
                     <span style={{
-                      padding: '4px 10px', borderRadius: '4px', fontSize: '0.7rem', fontWeight: 700,
-                      background: 'rgba(255,255,255,0.08)', color: '#ffffff', border: '1px solid rgba(255,255,255,0.2)'
+                      padding: '4px 10px', borderRadius: '4px', fontSize: '0.70rem', fontWeight: 700,
+                      background: 'rgba(108,123,255,0.12)', color: 'var(--indigo)', border: '1px solid rgba(108,123,255,0.3)',
+                      fontFamily: 'var(--font-heading)'
                     }}>
                       ALWAYS RUNS
                     </span>
                   ) : didFire ? (
                     <span style={{
-                      padding: '4px 10px', borderRadius: '4px', fontSize: '0.7rem', fontWeight: 700,
-                      background: 'rgba(255,255,255,0.15)', color: '#ffffff', border: '1px solid #ffffff'
+                      padding: '4px 10px', borderRadius: '4px', fontSize: '0.70rem', fontWeight: 700,
+                      background: 'rgba(51,225,232,0.12)', color: 'var(--cyan)', border: '1px solid rgba(51,225,232,0.35)',
+                      fontFamily: 'var(--font-heading)'
                     }}>
                       ACTIVE THIS ROUND
                     </span>
                   ) : (
                     <span style={{
-                      padding: '4px 10px', borderRadius: '4px', fontSize: '0.7rem', fontWeight: 700,
-                      background: 'rgba(255,255,255,0.03)', color: '#71717a', border: '1px solid rgba(255,255,255,0.1)'
+                      padding: '4px 10px', borderRadius: '4px', fontSize: '0.70rem', fontWeight: 700,
+                      background: 'var(--panel-2)', color: 'var(--text-faint)', border: '1px solid var(--border)',
+                      fontFamily: 'var(--font-heading)'
                     }}>
                       DORMANT
                     </span>
@@ -414,14 +416,14 @@ export default function PipelineLevelsView() {
                 </div>
               </div>
 
-              <div style={{ height: '1px', background: 'rgba(255,255,255,0.1)' }} />
+              <div style={{ height: '1px', background: 'var(--border)' }} />
 
               {/* Concise Explanation */}
-              <div style={{ background: '#09090b', padding: '14px', borderRadius: '8px', border: '1px solid rgba(255,255,255,0.1)' }}>
-                <div style={{ fontSize: '0.68rem', fontWeight: 800, color: '#71717a', textTransform: 'uppercase', letterSpacing: '0.06em', marginBottom: '4px' }}>
+              <div style={{ background: 'var(--panel-2)', padding: '14px', borderRadius: '10px', border: '1px solid var(--border)' }}>
+                <div style={{ fontSize: '0.68rem', fontWeight: 700, color: 'var(--text-faint)', textTransform: 'uppercase', letterSpacing: '0.06em', marginBottom: '4px', fontFamily: 'var(--font-heading)' }}>
                   Operation:
                 </div>
-                <div style={{ fontSize: '0.9rem', color: '#d4d4d8', lineHeight: 1.5 }}>
+                <div style={{ fontSize: '0.88rem', color: 'var(--text)', lineHeight: 1.5 }}>
                   {currentStep.simpleWhat}
                 </div>
               </div>
@@ -432,23 +434,23 @@ export default function PipelineLevelsView() {
                 alignItems: 'center',
                 gap: '10px',
                 padding: '12px 16px',
-                borderRadius: '8px',
-                background: 'rgba(255,255,255,0.03)',
-                border: '1px solid rgba(255,255,255,0.1)'
+                borderRadius: '10px',
+                background: 'var(--panel-2)',
+                border: '1px solid var(--border)'
               }}>
-                <Clock size={16} color="#ffffff" />
-                <span style={{ fontSize: '0.8rem', color: '#a1a1aa' }}>Layer Compute Time:</span>
-                <span style={{ fontFamily: 'monospace', fontSize: '1.05rem', fontWeight: 900, color: '#ffffff' }}>
+                <Clock size={16} color="var(--indigo)" />
+                <span style={{ fontSize: '0.80rem', color: 'var(--text-dim)' }}>Layer Compute Time:</span>
+                <span style={{ fontFamily: 'var(--font-heading)', fontSize: '1.05rem', fontWeight: 700, color: 'var(--cyan)' }}>
                   {durationMs.toFixed(3)} ms
                 </span>
-                <span style={{ fontSize: '0.72rem', color: '#71717a', marginLeft: 'auto' }}>
+                <span style={{ fontSize: '0.72rem', color: 'var(--text-faint)', marginLeft: 'auto' }}>
                   Measured CPU execution time
                 </span>
               </div>
 
               {/* Conditional explanation */}
               {!currentStep.alwaysRuns && !didFire && (
-                <div style={{ padding: '10px 14px', borderRadius: '6px', background: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.08)', fontSize: '0.78rem', color: '#a1a1aa' }}>
+                <div style={{ padding: '10px 14px', borderRadius: '8px', background: 'var(--panel-2)', border: '1px solid var(--border)', fontSize: '0.78rem', color: 'var(--text-dim)' }}>
                   {currentStep.id === 'l3_chaos'
                     ? 'Condition: Stagnation threshold (<10 rounds unchanged) not met.'
                     : 'Condition: Executes strictly every 15 iterations.'}
@@ -458,24 +460,24 @@ export default function PipelineLevelsView() {
               <div style={{ flex: 1 }} />
 
               {/* Step Navigation Controls (Prev Step / Next Step) */}
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderTop: '1px solid rgba(255,255,255,0.1)', paddingTop: '12px' }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderTop: '1px solid var(--border)', paddingTop: '12px' }}>
                 <button
                   onClick={prevStep}
                   disabled={isFirstStep}
-                  className="btn-material-outline"
+                  className="btn-quantum-secondary"
                   style={{ padding: '8px 18px', display: 'flex', alignItems: 'center', gap: '6px', fontSize: '0.82rem' }}
                 >
                   <ChevronLeft size={15} /> Previous Step
                 </button>
 
-                <div style={{ fontSize: '0.75rem', color: '#71717a' }}>
+                <div style={{ fontSize: '0.75rem', color: 'var(--text-faint)', fontFamily: 'var(--font-heading)' }}>
                   Step {stepIdx + 1} of {PIPELINE_STEPS.length}
                 </div>
 
                 {!isLastStep ? (
                   <button
                     onClick={nextStep}
-                    className="btn-material-white"
+                    className="btn-quantum-primary"
                     style={{ padding: '8px 20px', display: 'flex', alignItems: 'center', gap: '6px', fontSize: '0.82rem' }}
                   >
                     Next Step ({PIPELINE_STEPS[stepIdx + 1].name}) <ChevronRight size={15} />
@@ -484,12 +486,10 @@ export default function PipelineLevelsView() {
                   <button
                     onClick={nextIter}
                     disabled={isLastIter}
-                    className="btn-material-white"
+                    className="btn-quantum-primary"
                     style={{
                       padding: '8px 22px', display: 'flex', alignItems: 'center', gap: '6px', fontSize: '0.82rem',
-                      background: isLastIter ? '#27272a' : '#ffffff',
-                      color: isLastIter ? '#71717a' : '#000000',
-                      border: 'none'
+                      opacity: isLastIter ? 0.5 : 1
                     }}
                   >
                     Finish Round & Go to Iteration {iterIdx + 2} <ChevronsRight size={15} />
@@ -500,58 +500,58 @@ export default function PipelineLevelsView() {
 
           </div>
 
-          {/* Right Visuals Panel (Map + Graph) - Monochrome */}
+          {/* Right Visuals Panel (Map + Graph) */}
           <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', minHeight: 0 }}>
             
             {/* Route Map */}
-            <div className="glass-card" style={{ padding: '12px 14px', display: 'flex', flexDirection: 'column', gap: '8px', flexShrink: 0, border: '1px solid rgba(255,255,255,0.15)' }}>
-              <div style={{ fontSize: '0.72rem', fontWeight: 800, textTransform: 'uppercase', color: '#a1a1aa', letterSpacing: '0.05em' }}>
+            <div className="glass-card" style={{ padding: '12px 14px', display: 'flex', flexDirection: 'column', gap: '8px', flexShrink: 0 }}>
+              <div style={{ fontSize: '0.72rem', fontWeight: 700, textTransform: 'uppercase', color: 'var(--text-faint)', letterSpacing: '0.05em', fontFamily: 'var(--font-heading)' }}>
                 Route Map · Iteration {iterIdx + 1}
               </div>
               <RouteMap stops={stops} routes={frame?.best_route || []} />
-              <div style={{ fontSize: '0.68rem', color: '#71717a', textAlign: 'center' }}>
+              <div style={{ fontSize: '0.68rem', color: 'var(--text-dim)', textAlign: 'center' }}>
                 {frame?.best_route?.length || 0} vehicles · {stops.length - 1} stops
               </div>
             </div>
 
             {/* Convergence Graph */}
-            <div className="glass-card" style={{ padding: '12px 14px', display: 'flex', flexDirection: 'column', gap: '6px', flex: 1, minHeight: 0, border: '1px solid rgba(255,255,255,0.15)' }}>
-              <div style={{ fontSize: '0.72rem', fontWeight: 800, textTransform: 'uppercase', color: '#a1a1aa', letterSpacing: '0.05em' }}>
+            <div className="glass-card" style={{ padding: '12px 14px', display: 'flex', flexDirection: 'column', gap: '6px', flex: 1, minHeight: 0 }}>
+              <div style={{ fontSize: '0.72rem', fontWeight: 700, textTransform: 'uppercase', color: 'var(--text-faint)', letterSpacing: '0.05em', fontFamily: 'var(--font-heading)' }}>
                 Cost Convergence
               </div>
               <div style={{ flex: 1, minHeight: 0 }}>
                 <ResponsiveContainer width="100%" height="100%">
                   <LineChart data={convergenceData} margin={{ top: 6, right: 6, bottom: 0, left: -10 }}>
-                    <CartesianGrid strokeDasharray="2 4" stroke="rgba(255,255,255,0.06)" />
-                    <XAxis dataKey="iter" stroke="#52525b" tick={{ fontSize: 9 }} />
-                    <YAxis stroke="#52525b" tick={{ fontSize: 9 }} />
+                    <CartesianGrid strokeDasharray="2 4" stroke="rgba(120,140,220,0.14)" />
+                    <XAxis dataKey="iter" stroke="var(--text-faint)" tick={{ fill: 'var(--text-dim)', fontSize: 9, fontFamily: 'var(--font-heading)' }} />
+                    <YAxis stroke="var(--text-faint)" tick={{ fill: 'var(--text-dim)', fontSize: 9, fontFamily: 'var(--font-heading)' }} />
                     <Tooltip
-                      contentStyle={{ background: '#18181b', border: '1px solid rgba(255,255,255,0.2)', borderRadius: '4px', fontSize: '11px' }}
+                      contentStyle={{ background: 'var(--panel-2)', border: '1px solid var(--border)', borderRadius: '6px', fontSize: '11px', color: 'var(--text)' }}
                       formatter={v => [`${v}`, 'Distance']}
                     />
-                    <Line type="monotone" dataKey="cost" stroke="#ffffff" strokeWidth={1.5} dot={false} />
+                    <Line type="monotone" dataKey="cost" stroke="var(--indigo)" strokeWidth={1.8} dot={false} />
                     {frame && (
                       <Line
                         data={[{ iter: iterIdx + 1, cost: frame.global_best_cost }]}
                         type="monotone"
                         dataKey="cost"
-                        stroke="#ffffff"
+                        stroke="var(--cyan)"
                         strokeWidth={0}
-                        dot={{ r: 5, fill: '#ffffff', strokeWidth: 0 }}
+                        dot={{ r: 5, fill: 'var(--cyan)', stroke: '#ffffff', strokeWidth: 1.5 }}
                       />
                     )}
                   </LineChart>
                 </ResponsiveContainer>
               </div>
-              <div style={{ fontSize: '0.7rem', color: '#a1a1aa', textAlign: 'right' }}>
-                Best: <span style={{ color: '#ffffff', fontWeight: 800 }}>{frame?.global_best_cost}</span>
+              <div style={{ fontSize: '0.70rem', color: 'var(--text-dim)', textAlign: 'right' }}>
+                Best: <span style={{ color: 'var(--cyan)', fontWeight: 700, fontFamily: 'var(--font-heading)' }}>{frame?.global_best_cost}</span>
               </div>
             </div>
 
             {/* Reset */}
             <button
               onClick={() => { setIterIdx(0); setStepIdx(0); }}
-              className="btn-material-outline"
+              className="btn-quantum-secondary"
               style={{ padding: '6px 10px', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px', fontSize: '0.75rem' }}
             >
               <RotateCcw size={12} /> Reset to Start
@@ -568,3 +568,4 @@ export default function PipelineLevelsView() {
     </div>
   );
 }
+
