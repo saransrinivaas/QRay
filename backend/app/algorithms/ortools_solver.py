@@ -14,8 +14,15 @@ import time
 import numpy as np
 from typing import List, Dict, Tuple, Any, Optional
 
-from ortools.constraint_solver import pywrapcp, routing_enums_pb2
 from app.algorithms.base import AlgorithmResult, fast_calculate_total_cost
+
+try:
+    from ortools.constraint_solver import pywrapcp, routing_enums_pb2
+    HAS_ORTOOLS = True
+except ImportError:
+    pywrapcp = None
+    routing_enums_pb2 = None
+    HAS_ORTOOLS = False
 
 def run_ortools(
     matrix: np.ndarray,
@@ -31,6 +38,12 @@ def run_ortools(
     Runs Google OR-Tools CVRP solver.
     mode: "fast" (PATH_CHEAPEST_ARC first solution only) or "gls" (Guided Local Search)
     """
+    if not HAS_ORTOOLS:
+        from app.algorithms.dijkstra_nn import run_dijkstra_nn
+        res = run_dijkstra_nn(matrix, demands, vehicle_capacity, num_stops, num_vehicles, seed=seed)
+        res.metadata["fallback"] = "ortools_not_installed"
+        return res
+
     start_time = time.perf_counter()
     n_locations = num_stops + 1
 
