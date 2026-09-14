@@ -565,7 +565,7 @@ export default function GhostRaceArena() {
             }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                 <span style={{ fontSize: '0.72rem', color: 'var(--text-faint)' }}>First Place:</span>
-                <span style={{ fontSize: '0.80rem', fontWeight: 700, color: 'var(--indigo)', fontFamily: 'var(--font-heading)' }}>🥇 QRay Quantum ALNS+</span>
+                <span style={{ fontSize: '0.80rem', fontWeight: 700, color: 'var(--indigo)', fontFamily: 'var(--font-heading)' }}>QRay Quantum ALNS+</span>
               </div>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                 <span style={{ fontSize: '0.72rem', color: 'var(--text-faint)' }}>Speedup vs Google OR-Tools:</span>

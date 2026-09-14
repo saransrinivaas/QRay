@@ -170,22 +170,24 @@ export default function App() {
         zIndex: 1
       }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-          {/* Stealth Matte Emblem (No 20px box-shadow glow) */}
+          {/* New Official Q-Ray Emblem */}
           <div style={{ 
-            width: '32px', 
-            height: '32px', 
-            borderRadius: '6px', 
-            background: 'linear-gradient(135deg, #3730A3 0%, #1E1B4B 100%)', 
-            color: '#ffffff', 
+            width: '34px', 
+            height: '34px', 
+            borderRadius: '8px', 
+            background: 'linear-gradient(135deg, rgba(55, 48, 163, 0.45) 0%, rgba(15, 23, 42, 0.6) 100%)', 
             display: 'flex', 
             alignItems: 'center', 
             justifyContent: 'center', 
-            fontWeight: 700, 
-            fontSize: '1.05rem',
-            fontFamily: 'var(--font-heading)',
-            border: '1px solid rgba(255,255,255,0.12)'
+            border: '1px solid rgba(255, 255, 255, 0.12)',
+            padding: '4px',
+            boxSizing: 'border-box'
           }}>
-            Q
+            <img 
+              src="/qray-logo-white.png" 
+              alt="Q-Ray Logo" 
+              style={{ width: '24px', height: '24px', objectFit: 'contain', display: 'block' }} 
+            />
           </div>
           <div>
             <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
