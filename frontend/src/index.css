@@ -1,13 +1,14 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&family=Space+Grotesk:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap');
 @import 'leaflet/dist/leaflet.css';
 
 :root {
-  /* Quantum Console Design Tokens */
+  /* Original Deep Dark Tone (Stealth Console Palette) */
   --bg: #020308;
   --panel: #060A18;
   --panel-2: #0A1024;
-  --panel-glass: rgba(8, 12, 26, 0.6);
-  --border: rgba(100, 120, 200, 0.12);
+  --panel-glass: rgba(8, 12, 26, 0.78);
+  --border: rgba(100, 120, 200, 0.14);
+  --border-subtle: rgba(100, 120, 200, 0.08);
   --indigo: #5A6AF5;
   --cyan: #2BC9D6;
   --violet: #7A5AF0;
@@ -50,11 +51,11 @@ h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-heading);
   color: var(--text);
   font-weight: 700;
-  letter-spacing: -0.02em;
+  letter-spacing: -0.01em;
 }
 
 .num-readout {
-  font-family: var(--font-heading);
+  font-family: var(--font-mono);
   font-weight: 600;
 }
 
@@ -62,52 +63,32 @@ code, pre {
   font-family: var(--font-mono);
 }
 
-/* ── Quantum Glass Panel ── */
+/* ── Deep Dark Panels (Sleek, No Light Glows) ── */
 .glass-card {
   background: var(--panel-glass);
   border: 1px solid var(--border) !important;
-  border-radius: 14px;
+  border-radius: 12px;
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
-  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.04);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
   position: relative;
 }
 
 .glass-card-solid {
   background: var(--panel);
   border: 1px solid var(--border) !important;
-  border-radius: 14px;
-  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.04);
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
 }
 
-/* ── Scenario Card Hairline Top Highlight ── */
-.scenario-card-hairline {
-  position: relative;
-}
-
-.scenario-card-hairline::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 1px;
-  background: linear-gradient(90deg, transparent 0%, var(--indigo) 35%, var(--cyan) 65%, transparent 100%);
-  border-top-left-radius: 14px;
-  border-top-right-radius: 14px;
-  pointer-events: none;
-  z-index: 2;
-}
-
-/* ── Stat Tile Accent Bar & Glow ── */
+/* ── Stat Tile Accent Bar (Matte Accent, No Light Glow) ── */
 .stat-tile-accent {
   position: relative;
   overflow: hidden;
   background: var(--panel-2);
-  border-radius: 12px;
+  border-radius: 8px;
   border: 1px solid var(--border);
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.03);
-  transition: all 0.25s ease;
+  transition: border-color 0.2s ease;
 }
 
 .stat-tile-accent::before {
@@ -117,72 +98,77 @@ code, pre {
   top: 0;
   bottom: 0;
   width: 2px;
-  background: linear-gradient(180deg, var(--indigo) 0%, var(--cyan) 100%);
+  background: var(--indigo);
   border-radius: 2px;
   z-index: 2;
 }
 
-@keyframes statTileGlowPulse {
-  0% {
-    box-shadow: 0 0 0 0 rgba(43, 201, 214, 0);
-    border-color: var(--border);
-  }
-  50% {
-    box-shadow: 0 0 18px rgba(43, 201, 214, 0.35);
-    border-color: var(--cyan);
-  }
-  100% {
-    box-shadow: 0 0 0 0 rgba(43, 201, 214, 0);
-    border-color: var(--border);
-  }
-}
-
 .stat-tile-solving {
-  animation: statTileGlowPulse 1.1s ease-in-out infinite !important;
+  border-color: rgba(90, 106, 245, 0.4) !important;
 }
 
-/* ── Live / Active Pulsing Elements ── */
-@keyframes livePulseSlow {
-  0%, 100% {
-    opacity: 1;
-  }
-  50% {
-    opacity: 0.4;
-  }
+/* ── Professional Status Badges & Pills ── */
+.status-pill-feasible {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 2px 7px;
+  border-radius: 4px;
+  font-size: 0.69rem;
+  font-weight: 600;
+  background: rgba(16, 185, 129, 0.12);
+  color: #34D399;
+  border: 1px solid rgba(16, 185, 129, 0.22);
+  font-family: var(--font-heading);
+  letter-spacing: 0.02em;
 }
 
-.live-indicator-slow {
-  animation: livePulseSlow 1.8s ease-in-out infinite;
+.status-pill-infeasible {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 2px 7px;
+  border-radius: 4px;
+  font-size: 0.69rem;
+  font-weight: 600;
+  background: rgba(239, 68, 68, 0.12);
+  color: #F87171;
+  border: 1px solid rgba(239, 68, 68, 0.22);
+  font-family: var(--font-heading);
+  letter-spacing: 0.02em;
 }
 
-@keyframes cyanPulsing {
-  0% {
-    box-shadow: 0 0 0 0 rgba(43, 201, 214, 0.6);
-  }
-  70% {
-    box-shadow: 0 0 0 8px rgba(43, 201, 214, 0);
-  }
-  100% {
-    box-shadow: 0 0 0 0 rgba(43, 201, 214, 0);
-  }
+.status-pill-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 1px 6px;
+  border-radius: 3px;
+  font-size: 0.65rem;
+  font-weight: 700;
+  background: rgba(90, 106, 245, 0.14);
+  color: #818CF8;
+  border: 1px solid rgba(90, 106, 245, 0.25);
+  font-family: var(--font-heading);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
 }
 
+/* ── Subtle Status Indicator (No glowing halo) ── */
 .live-beacon {
-  width: 8px;
-  height: 8px;
+  width: 7px;
+  height: 7px;
   border-radius: 50%;
-  background-color: var(--cyan);
+  background-color: #10B981;
   display: inline-block;
-  box-shadow: 0 0 10px var(--cyan);
-  animation: cyanPulsing 2s infinite cubic-bezier(0.4, 0, 0.6, 1);
 }
 
 .badge-live-cyan {
-  background: rgba(43, 201, 214, 0.12);
+  background: rgba(43, 201, 216, 0.10);
   color: var(--cyan);
-  border: 1px solid rgba(43, 201, 214, 0.35);
+  border: 1px solid rgba(43, 201, 216, 0.25);
   font-family: var(--font-heading);
-  font-weight: 700;
+  font-weight: 600;
   border-radius: 4px;
   padding: 2px 7px;
   display: inline-flex;
@@ -190,24 +176,24 @@ code, pre {
   gap: 5px;
 }
 
-/* ── Primary CTA Button ── */
+/* ── Matte Buttons in Deep Dark Tone (No bright light bloom) ── */
 .btn-material-white,
 .btn-quantum-primary {
-  background: linear-gradient(135deg, var(--indigo) 0%, var(--violet) 100%) !important;
+  background: #3730A3 !important;
   color: #ffffff !important;
   font-family: var(--font-body) !important;
-  font-weight: 700 !important;
-  border: 1px solid rgba(255, 255, 255, 0.18) !important;
-  border-radius: 8px !important;
-  box-shadow: 0 4px 20px rgba(90, 106, 245, 0.35) !important;
-  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  font-weight: 600 !important;
+  border: 1px solid rgba(255, 255, 255, 0.15) !important;
+  border-radius: 6px !important;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.35) !important;
+  transition: all 0.15s ease !important;
   cursor: pointer;
 }
 
 .btn-material-white:hover,
 .btn-quantum-primary:hover {
-  transform: translateY(-1px);
-  box-shadow: 0 6px 24px rgba(90, 106, 245, 0.55) !important;
+  background: #4338CA !important;
+  border-color: rgba(255, 255, 255, 0.25) !important;
 }
 
 .btn-material-white:active,
@@ -218,13 +204,13 @@ code, pre {
 /* ── Secondary Button ── */
 .btn-material-outline,
 .btn-quantum-secondary {
-  background: rgba(10, 16, 36, 0.55) !important;
+  background: rgba(10, 16, 36, 0.65) !important;
   color: var(--text-dim) !important;
   font-family: var(--font-body) !important;
-  font-weight: 600 !important;
+  font-weight: 500 !important;
   border: 1px solid var(--border) !important;
-  border-radius: 8px !important;
-  transition: all 0.2s ease !important;
+  border-radius: 6px !important;
+  transition: all 0.15s ease !important;
   cursor: pointer;
 }
 
@@ -232,7 +218,7 @@ code, pre {
 .btn-quantum-secondary:hover {
   background: var(--panel-2) !important;
   color: var(--text) !important;
-  border-color: rgba(90, 106, 245, 0.35) !important;
+  border-color: rgba(100, 120, 200, 0.28) !important;
 }
 
 /* ── Inputs & Selects ── */
@@ -242,27 +228,27 @@ select, input[type="text"], input[type="number"] {
   border: 1px solid var(--border) !important;
   outline: none;
   font-family: var(--font-body);
-  transition: all 0.2s ease;
+  border-radius: 6px;
+  transition: border-color 0.15s ease;
 }
 
 select:hover, input[type="text"]:hover, input[type="number"]:hover {
-  border-color: rgba(90, 106, 245, 0.35) !important;
+  border-color: rgba(100, 120, 200, 0.30) !important;
 }
 
 select:focus, input[type="text"]:focus, input[type="number"]:focus {
   border-color: var(--indigo) !important;
-  box-shadow: 0 0 0 2px rgba(90, 106, 245, 0.25);
 }
 
 input[type=range] {
-  accent-color: var(--cyan);
+  accent-color: var(--indigo);
 }
 
-/* ── Orchestrated Staggered Page Entrance ── */
+/* ── Smooth Orchestrated Staggered Page Entrance ── */
 @keyframes pageFadeUp {
   from {
     opacity: 0;
-    transform: translateY(10px);
+    transform: translateY(8px);
   }
   to {
     opacity: 1;
@@ -271,22 +257,18 @@ input[type=range] {
 }
 
 .stagger-enter-1 {
-  animation: pageFadeUp 0.4s ease-out 0ms both;
+  animation: pageFadeUp 0.35s ease-out 0ms both;
 }
 
 .stagger-enter-2 {
-  animation: pageFadeUp 0.4s ease-out 80ms both;
+  animation: pageFadeUp 0.35s ease-out 60ms both;
 }
 
 .stagger-enter-3 {
-  animation: pageFadeUp 0.4s ease-out 160ms both;
+  animation: pageFadeUp 0.35s ease-out 120ms both;
 }
 
-.stagger-enter-4 {
-  animation: pageFadeUp 0.4s ease-out 240ms both;
-}
-
-/* ── Quantum Background Animations ── */
+/* ── Subtle Background Orbit Motion ── */
 @keyframes orbitRotateSlow {
   from {
     transform: rotate(0deg);
@@ -307,34 +289,34 @@ input[type=range] {
 
 .quantum-orbit-ring {
   transform-origin: center;
-  animation: orbitRotateSlow 110s linear infinite;
+  animation: orbitRotateSlow 160s linear infinite;
 }
 
 .quantum-orbit-ring-fast {
   transform-origin: center;
-  animation: orbitRotateReverse 140s linear infinite;
+  animation: orbitRotateReverse 190s linear infinite;
 }
 
-/* ── Custom Scrollbar ── */
+/* ── Clean Dark Scrollbar ── */
 ::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
+  width: 5px;
+  height: 5px;
 }
 ::-webkit-scrollbar-track {
   background: var(--bg);
 }
 ::-webkit-scrollbar-thumb {
   background: var(--panel-2);
-  border-radius: 4px;
+  border-radius: 3px;
   border: 1px solid var(--border);
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--indigo);
+  background: #1E293B;
 }
 
 /* ── Map Tooltip Styling ── */
 .leaflet-popup-content-wrapper, .leaflet-popup-tip {
-  background: var(--panel-2) !important;
+  background: var(--panel) !important;
   color: var(--text) !important;
   border: 1px solid var(--border) !important;
   border-radius: 8px !important;
@@ -346,11 +328,8 @@ input[type=range] {
   border: none !important;
   box-shadow: none !important;
   padding: 0 !important;
-  transition: opacity 0.2s ease-in-out !important;
 }
 
 .custom-map-tooltip::before {
   display: none !important;
 }
-
-

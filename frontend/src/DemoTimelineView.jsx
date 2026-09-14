@@ -777,9 +777,9 @@ export default function DemoTimelineView() {
                 cursor: 'pointer'
               }}
             >
-              <option value="auto">🔄 Auto-Evaluate (Smart Decision)</option>
-              <option value="reroute">⚡ Detour Available (Smaller ETA Reroute)</option>
-              <option value="no_turnaround">⚠ No Turnaround (Continue Current Route)</option>
+              <option value="auto">Auto-Evaluate (Policy Optimized)</option>
+              <option value="reroute">Detour Available (Dynamic Reroute Active)</option>
+              <option value="no_turnaround">No Turnaround (Sustain Scheduled Route)</option>
             </select>
           </div>
 
@@ -890,7 +890,7 @@ export default function DemoTimelineView() {
             title="Open Interactive Disruption Sandbox (Floods, Roadblocks, VIP Corridors)"
           >
             <Zap size={13} style={{ color: 'var(--violet)' }} />
-            ⚡ Chaos Sandbox
+            Disruption Sandbox
           </button>
 
           {/* Traffic Alert Trigger */}
@@ -980,11 +980,16 @@ export default function DemoTimelineView() {
             {/* Reroute Time */}
             <div className={`stat-tile-accent ${statPulse ? 'stat-tile-solving' : ''}`} style={{
               padding: '8px 12px 8px 14px',
-              background: isPastDisruption ? 'rgba(239,68,68,0.12)' : 'var(--panel-2)',
-              borderColor: isPastDisruption ? 'rgba(239,68,68,0.4)' : 'var(--border)'
+              background: isPastDisruption ? 'rgba(239,68,68,0.08)' : 'var(--panel-2)',
+              borderColor: isPastDisruption ? 'rgba(239,68,68,0.35)' : 'var(--border)'
             }}>
-              <div style={{ fontSize: '0.68rem', color: isPastDisruption ? '#fca5a5' : 'var(--text-faint)', fontWeight: 500, display: 'flex', alignItems: 'center', gap: '4px' }}>
-                <AlertTriangle size={12} style={{ color: isPastDisruption ? '#ef4444' : 'var(--text-dim)' }} /> Reroute time
+              <div style={{ fontSize: '0.68rem', color: isPastDisruption ? '#fca5a5' : 'var(--text-faint)', fontWeight: 500, display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                <span style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
+                  <AlertTriangle size={12} style={{ color: isPastDisruption ? '#ef4444' : 'var(--text-dim)' }} /> Reroute time
+                </span>
+                {isPastDisruption && (
+                  <span style={{ fontSize: '0.58rem', color: 'var(--text-dim)', letterSpacing: '0.04em', textTransform: 'uppercase' }}>warm restart</span>
+                )}
               </div>
               <div style={{ fontSize: '1.15rem', fontWeight: 600, color: isPastDisruption ? '#fca5a5' : 'var(--text)', marginTop: '2px', fontFamily: 'var(--font-heading)' }}>
                 {isPastDisruption ? `${timeline?.rerouteMs ?? '—'} ms` : '—'}
@@ -1440,18 +1445,18 @@ export default function DemoTimelineView() {
             {/* Quick Crisis Scenario Presets Selector */}
             <div style={{ background: 'var(--panel-2)', padding: '8px 10px', borderRadius: '8px', border: '1px solid var(--border)' }}>
               <label style={{ fontSize: '0.68rem', color: 'var(--text-faint)', display: 'block', marginBottom: '4px', fontWeight: 600 }}>
-                ⚡ Quick Crisis Preset:
+                Operational Scenario Preset:
               </label>
               <select
                 value={activePreset}
                 onChange={e => handleApplyPreset(e.target.value)}
                 style={{ width: '100%', padding: '5px 8px', borderRadius: '6px', fontSize: '0.76rem', background: 'var(--panel)', color: 'var(--text)', border: '1px solid var(--border)' }}
               >
-                <option value="standard">🏙️ Standard Dispatch (20 Balanced Stops)</option>
-                <option value="flood">🌊 Monsoon Flash Flood (Guindy & Velachery Inundated)</option>
-                <option value="kathipara">🚗 Peak Hour Kathipara Flyover Gridlock</option>
-                <option value="medical">🏥 Urgent Hospital Medical Supplies Rush</option>
-                <option value="ev_green">⚡ Zero-Emission EV Fleet (70kg capacity / 5 vans)</option>
+                <option value="standard">Standard Dispatch (20 Balanced Stops)</option>
+                <option value="flood">Monsoon Flash Flood (Guindy & Velachery Inundated)</option>
+                <option value="kathipara">Peak Hour Kathipara Flyover Gridlock</option>
+                <option value="medical">Urgent Hospital Medical Supplies Rush</option>
+                <option value="ev_green">Zero-Emission EV Fleet (70kg capacity / 5 vans)</option>
               </select>
             </div>
 
@@ -1503,7 +1508,7 @@ export default function DemoTimelineView() {
                   >
                     {algorithms.map(a => (
                       <option key={a.key} value={a.key}>
-                        {a.label}{a.is_primary ? ' ★' : ''}
+                        {a.label}{a.is_primary ? ' [Primary Engine]' : ''}
                       </option>
                     ))}
                   </select>

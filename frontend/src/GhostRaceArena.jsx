@@ -314,7 +314,7 @@ export default function GhostRaceArena() {
               <Gauge size={14} style={{ color: 'var(--cyan)' }} /> Simulation Timeline: {progress.toFixed(0)}% Elapsed
             </span>
             <span style={{ fontSize: '0.72rem', color: isFinished ? 'var(--cyan)' : 'var(--text-faint)', fontWeight: 600 }}>
-              {isFinished ? '🏁 All Algorithms Crossed Finish Line' : '⚡ Virtual Fleet in Transit'}
+              {isFinished ? 'Execution Complete — All Fleets Concluded' : 'Virtual Fleets in Transit'}
             </span>
           </div>
 
@@ -478,10 +478,12 @@ export default function GhostRaceArena() {
                     <div style={{
                       position: 'absolute',
                       right: '6px',
-                      fontSize: '0.8rem',
-                      opacity: racerProg >= 100 ? 1 : 0.4
+                      fontSize: '0.66rem',
+                      fontWeight: 700,
+                      color: racerProg >= 100 ? 'var(--cyan)' : 'var(--text-faint)',
+                      fontFamily: 'var(--font-mono)'
                     }}>
-                      🏁
+                      [END]
                     </div>
                   </div>
 

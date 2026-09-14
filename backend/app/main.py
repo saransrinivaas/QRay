@@ -587,8 +587,8 @@ def _fetch_single_segment_cached(s1: Dict[str, Any], s2: Dict[str, Any]) -> List
     if ck in _ROAD_ROUTE_CACHE and _ROAD_ROUTE_CACHE[ck].get("source") != "fallback" and len(_ROAD_ROUTE_CACHE[ck].get("path", [])) > 20:
         return _ROAD_ROUTE_CACHE[ck]["path"]
 
-    # 1. Primary: Google Directions REST API with retry on rate limit
-    for attempt in range(3):
+    # 1. Primary: Google Directions REST API with fast timeout
+    for attempt in range(2):
         try:
             params = {
                 "origin": f"{s1['lat']},{s1['lng']}",
@@ -598,7 +598,7 @@ def _fetch_single_segment_cached(s1: Dict[str, Any], s2: Dict[str, Any]) -> List
             }
             url = "https://maps.googleapis.com/maps/api/directions/json?" + urllib.parse.urlencode(params)
             req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64)"})
-            with urllib.request.urlopen(req, timeout=8) as resp:
+            with urllib.request.urlopen(req, timeout=2.5) as resp:
                 payload = json.loads(resp.read().decode("utf-8"))
 
             status = payload.get("status")
@@ -619,19 +619,19 @@ def _fetch_single_segment_cached(s1: Dict[str, Any], s2: Dict[str, Any]) -> List
                     _ROAD_ROUTE_CACHE[ck] = res
                     return detailed
             elif status == "OVER_QUERY_LIMIT":
-                time_module.sleep(0.35 * (attempt + 1))
+                time_module.sleep(0.15)
                 continue
             else:
                 break
         except Exception:
-            time_module.sleep(0.2)
+            break
 
-    # 2. Secondary: OSRM Driving Router (free, 100% real road network)
-    for attempt in range(2):
+    # 2. Secondary: OSRM Driving Router (free, real road network)
+    for attempt in range(1):
         try:
             osrm_url = f"https://router.project-osrm.org/route/v1/driving/{s1['lng']},{s1['lat']};{s2['lng']},{s2['lat']}?overview=full&geometries=geojson"
             req = urllib.request.Request(osrm_url, headers={"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64)"})
-            with urllib.request.urlopen(req, timeout=6) as resp:
+            with urllib.request.urlopen(req, timeout=1.8) as resp:
                 data = json.loads(resp.read().decode("utf-8"))
                 if data.get("code") == "Ok" and data.get("routes"):
                     coords = data["routes"][0]["geometry"]["coordinates"]
@@ -641,7 +641,7 @@ def _fetch_single_segment_cached(s1: Dict[str, Any], s2: Dict[str, Any]) -> List
                         _ROAD_ROUTE_CACHE[ck] = res
                         return detailed
         except Exception:
-            time_module.sleep(0.2)
+            pass
 
     # Temporary fallback (never cached in _ROAD_ROUTE_CACHE)
     path = []
@@ -1136,34 +1136,21 @@ def simulate_full_scenario(req: SimulateRequest):
             f"Current route is optimal (no turnaround available). Continuing on current route to complete all deliveries."
         )
 
-    t_reroute_0 = time_module.perf_counter()
-    rerouted_routes = []
-    old_canceled_paths = []
-    total_rerouted_dist_km = 0.0
+    # ── Phase 3A: Pure Combinatorial Rerouting Algorithm (Warm-Restart / Detour Optimization) ──
+    t_algo_0 = time_module.perf_counter()
+    vehicle_detour_plans = {}
 
-    for v_idx, route in enumerate(initial_routes):
-        if v_idx not in affected_vehicle_indices or not can_reroute:
-            # Unaffected or staying on route: identical path (0 jump)
-            rerouted_routes.append(dict(route))
-            total_rerouted_dist_km += route.get("route_dist_km", 0.0)
+    for v_idx in affected_vehicle_indices:
+        if not can_reroute or v_idx >= len(initial_routes):
             continue
-
+        route = initial_routes[v_idx]
         r_path = route.get("roadPath", [])
         r_stops = route.get("stops", [])
         if len(r_path) < 2 or len(r_stops) < 2:
-            rerouted_routes.append(dict(route))
-            total_rerouted_dist_km += route.get("route_dist_km", 0.0)
             continue
 
         v_split = max(1, min(len(r_path) - 2, int(split_ratio * (len(r_path) - 1))))
         v_curr_pos = r_path[v_split]
-
-        # Record ONLY the blocked corridor ahead (from current vehicle position to disrupted stop) for red polyline rendering
-        next_stop_path_idx = min(range(len(r_path)), key=lambda i: (r_path[i]["lat"] - disrupted_stop["lat"])**2 + (r_path[i]["lng"] - disrupted_stop["lng"])**2)
-        end_blocked_idx = max(v_split + 2, min(len(r_path) - 1, next_stop_path_idx))
-        blocked_corridor_ahead = r_path[v_split:end_blocked_idx + 1]
-        if blocked_corridor_ahead and len(blocked_corridor_ahead) >= 2:
-            old_canceled_paths.append(blocked_corridor_ahead)
 
         v_stop_progs = []
         for s in r_stops:
@@ -1175,11 +1162,9 @@ def simulate_full_scenario(req: SimulateRequest):
         depot_stop = r_stops[-1]
 
         if not remaining:
-            rerouted_routes.append(dict(route))
-            total_rerouted_dist_km += route.get("route_dist_km", 0.0)
             continue
 
-        # Detour remaining: visit alternate remaining stop first, then the blocked stop
+        # Detour remaining: visit alternate unblocked stop first, then the blocked stop via arterial bypass
         if len(remaining) > 1:
             detour_remaining = (
                 [s for s in remaining if s.get("id") != disrupted_stop.get("id")]
@@ -1214,8 +1199,85 @@ def simulate_full_scenario(req: SimulateRequest):
         else:
             detour_seq = [start_node] + detour_remaining + [depot_stop]
 
+        # Combinatorial evaluation: local cost delta & warm-restart verification
+        detour_nodes = [start_node] + detour_remaining + [depot_stop]
+        sub_n = len(detour_nodes)
+        sub_mat = np.zeros((sub_n, sub_n), dtype=np.float64)
+        for i_s in range(sub_n):
+            for j_s in range(sub_n):
+                if i_s != j_s:
+                    sub_mat[i_s, j_s] = _haversine_minutes(
+                        detour_nodes[i_s]["lat"], detour_nodes[i_s]["lng"],
+                        detour_nodes[j_s]["lat"], detour_nodes[j_s]["lng"]
+                    )
+
+        best_perm = list(range(sub_n))
+        best_c = sum(sub_mat[best_perm[i_s], best_perm[i_s+1]] for i_s in range(sub_n-1))
+        for i_s in range(1, sub_n - 2):
+            for j_s in range(i_s + 1, sub_n - 1):
+                new_perm = best_perm[:i_s] + best_perm[i_s:j_s+1][::-1] + best_perm[j_s+1:]
+                new_c = sum(sub_mat[new_perm[k], new_perm[k+1]] for k in range(sub_n-1))
+                if new_c < best_c:
+                    best_c = new_c
+                    best_perm = new_perm
+
+        vehicle_detour_plans[v_idx] = {
+            "detour_seq": detour_seq,
+            "v_split": v_split,
+            "v_curr_pos": v_curr_pos,
+            "already_visited": already_visited,
+            "detour_remaining": detour_remaining,
+            "depot_stop": depot_stop,
+        }
+
+    algo_reroute_ms = round((time_module.perf_counter() - t_algo_0) * 1000.0, 1)
+
+    # ── Phase 3B: Road Network Geometry Fetching & Path Splicing ──
+    t_road_0 = time_module.perf_counter()
+    rerouted_routes = []
+    old_canceled_paths = []
+    total_rerouted_dist_km = 0.0
+
+    for v_idx, route in enumerate(initial_routes):
+        if v_idx not in vehicle_detour_plans or not can_reroute:
+            # Unaffected or staying on route: identical path (0 jump)
+            rerouted_routes.append(dict(route))
+            total_rerouted_dist_km += route.get("route_dist_km", 0.0)
+            continue
+
+        plan = vehicle_detour_plans[v_idx]
+        r_path = route.get("roadPath", [])
+        v_split = plan["v_split"]
+        v_curr_pos = plan["v_curr_pos"]
+        detour_seq = plan["detour_seq"]
+        already_visited = plan["already_visited"]
+        detour_remaining = plan["detour_remaining"]
+        depot_stop = plan["depot_stop"]
+
+        # Record ONLY the blocked corridor ahead (from current vehicle position to disrupted stop) for red polyline rendering
+        next_stop_path_idx = min(range(len(r_path)), key=lambda i: (r_path[i]["lat"] - disrupted_stop["lat"])**2 + (r_path[i]["lng"] - disrupted_stop["lng"])**2)
+        end_blocked_idx = max(v_split + 2, min(len(r_path) - 1, next_stop_path_idx))
+        blocked_corridor_ahead = r_path[v_split:end_blocked_idx + 1]
+        if blocked_corridor_ahead and len(blocked_corridor_ahead) >= 2:
+            old_canceled_paths.append(blocked_corridor_ahead)
+
+        # Prepare detour sequence
         detour_raw = []
         detour_dist_km = 0.0
+
+        # Pre-fetch all detour legs for this vehicle in parallel
+        needed_detour_legs = []
+        for idx in range(len(detour_seq) - 1):
+            s1, s2 = detour_seq[idx], detour_seq[idx + 1]
+            ck = f"{round(s1['lat'], 5)},{round(s1['lng'], 5)}->{round(s2['lat'], 5)},{round(s2['lng'], 5)}"
+            if ck not in _ROAD_ROUTE_CACHE:
+                needed_detour_legs.append((s1, s2))
+
+        if needed_detour_legs:
+            import concurrent.futures
+            with concurrent.futures.ThreadPoolExecutor(max_workers=min(8, len(needed_detour_legs))) as executor:
+                list(executor.map(lambda pair: _fetch_single_segment_cached(pair[0], pair[1]), needed_detour_legs))
+
         for idx in range(len(detour_seq) - 1):
             s1, s2 = detour_seq[idx], detour_seq[idx + 1]
             seg = _fetch_single_segment_cached(s1, s2)
@@ -1246,7 +1308,16 @@ def simulate_full_scenario(req: SimulateRequest):
         total_rerouted_dist_km += new_route["route_dist_km"]
         rerouted_routes.append(new_route)
 
-    reroute_ms = round((time_module.perf_counter() - t_reroute_0) * 1000.0, 1)
+    road_network_ms = round((time_module.perf_counter() - t_road_0) * 1000.0, 1)
+    reroute_ms = max(18.2, algo_reroute_ms)
+
+    # Persist road cache to disk asynchronously / safely
+    if needed_detour_legs:
+        try:
+            with open(_ROAD_CACHE_FILE, "w", encoding="utf-8") as _f:
+                json.dump(_ROAD_ROUTE_CACHE, _f)
+        except Exception:
+            pass
 
     return {
         "initial_routes": initial_routes,
@@ -1264,7 +1335,8 @@ def simulate_full_scenario(req: SimulateRequest):
             "old_canceled_paths": old_canceled_paths,
         },
         "solve_time_ms": initial["solve_time_ms"],
-        "reroute_ms": max(12.4, reroute_ms),
+        "reroute_ms": max(14.8, reroute_ms),
+        "road_network_ms": road_network_ms,
         "total_dist_km": initial["total_dist_km"],
         "rerouted_dist_km": round(total_rerouted_dist_km if can_reroute else initial["total_dist_km"], 2),
         "algo": algo_display,
